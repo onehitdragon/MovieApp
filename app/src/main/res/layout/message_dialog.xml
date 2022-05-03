@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="280dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/corner_0"
+        >
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/corner_1">
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Lỗi"
+            style="@style/text_style_16"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/textViewContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Lỗi kết nối máy chủ"
+            style="@style/text_style_16"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btnAgree"
+                style="@style/editText_style_16"
+                android:layout_width="125dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/button_design_1"
+                android:text="Đồng ý"
+                android:textAllCaps="false"
+                android:textColor="@drawable/button_design_1_text" />
+            <Button
+                android:id="@+id/btnCancer"
+                style="@style/editText_style_16"
+                android:layout_width="125dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/button_design_1_red"
+                android:text="Hủy"
+                android:textAllCaps="false"
+                android:textColor="@drawable/button_design_1_text_red" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

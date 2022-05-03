@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.example.finalapp.converter.Converter"/>
+        <variable
+            name="loginViewModel"
+            type="com.example.finalapp.viewmodel.LoginViewModel" />
+        <variable
+            name="registerViewModel"
+            type="com.example.finalapp.viewmodel.RegisterViewModel" />
+    </data>
+<LinearLayout
+    android:id="@+id/backgroundLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.LoginRegisterActivity"
+    android:background="@drawable/bg1"
+    android:orientation="vertical"
+    android:paddingTop="15dp"
+    >
+    <!--  Login  -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Đăng nhập"
+        style="@style/text_style_16"
+        android:textColor="@drawable/button_design_0_text"
+        android:background="@drawable/button_design_0"
+        />
+    <LinearLayout
+        android:id="@+id/loginArea"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-51dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="25dp"
+        android:background="@color/black_main"
+        android:orientation="vertical"
+        android:translationZ="10dp"
+        android:visibility="gone">
+        <RelativeLayout
+            android:id="@+id/titleBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="35dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_style_16"
+                android:text="Đăng nhập"
+                android:textSize="24sp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                />
+
+            <Button
+                android:id="@+id/btnCloseLoginArea"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_close_design_0" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rowUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp">
+
+            <EditText
+                android:id="@+id/editTextUserName"
+                style="@style/editText_style_16"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edit_text_design_0"
+                android:gravity="center"
+                android:hint="Tên đăng nhập"
+                android:maxLines="1"
+                android:text="@={loginViewModel.account.email}" />
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rowPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp">
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                style="@style/editText_style_16"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edit_text_design_0"
+                android:gravity="center"
+                android:hint="Mật khẩu"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:text="@={loginViewModel.account.password}"/>
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+            <ImageView
+                android:id="@+id/imgLoad"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"/>
+
+            <Button
+                android:id="@+id/btnLogin2"
+                style="@style/editText_style_16"
+                android:layout_width="145dp"
+                android:layout_height="45dp"
+                android:background="@drawable/button_design_1"
+                android:text="Đăng nhập"
+                android:textAllCaps="false"
+                android:textColor="@drawable/button_design_1_text"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <!--  Register  -->
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Đăng ký"
+        style="@style/text_style_16"
+        android:textColor="@drawable/button_design_0_text"
+        android:background="@drawable/button_design_0"
+        />
+    <LinearLayout
+        android:id="@+id/registerArea"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-51dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="25dp"
+        android:background="@color/black_main"
+        android:orientation="vertical"
+        android:translationZ="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_style_16"
+                android:text="Đăng ký"
+                android:textSize="24sp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                />
+
+            <Button
+                android:id="@+id/btnCloseRegisterArea"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_close_design_0" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/editTextEmailRegister"
+                style="@style/editText_style_16"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edit_text_design_0"
+                android:gravity="center"
+                android:hint="Email"
+                android:maxLines="1"
+                android:text="@={registerViewModel.user.email}" />
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/textViewEmailRegisterValidation"
+            style="@style/text_style_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="10dp"
+            android:text="Email không hợp lệ"
+            android:textColor="@color/red"
+            android:visibility="gone"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginEnd="5dp"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:id="@+id/editTextLastNameRegister"
+                        style="@style/editText_style_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edit_text_design_0"
+                        android:gravity="center"
+                        android:hint="Họ"
+                        android:maxLines="1"
+                        android:text="@={registerViewModel.user.lastName}" />
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/textViewLastNameRegisterValidation"
+                    style="@style/text_style_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_marginTop="5dp"
+                    android:text="Từ 5->12 kí tự"
+                    android:textColor="@color/red"
+                    android:visibility="gone" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:id="@+id/editTextFirstNameRegister"
+                        style="@style/editText_style_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edit_text_design_0"
+                        android:gravity="center"
+                        android:hint="Tên"
+                        android:maxLines="1"
+                        android:text="@={registerViewModel.user.firstName}" />
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/textViewFirstNameRegisterValidation"
+                    style="@style/text_style_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_marginTop="5dp"
+                    android:text="Từ 5->12 kí tự"
+                    android:textColor="@color/red"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.5"
+                android:layout_marginRight="5dp">
+
+                <EditText
+                    android:id="@+id/editTextBirthDayRegister"
+                    style="@style/editText_style_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/edit_text_design_0"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="1/1/2000"
+                    android:maxLines="1" />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="5dp">
+
+                <EditText
+                    android:id="@+id/editTextGenderRegister"
+                    style="@style/editText_style_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/edit_text_design_0"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@={Converter.boolToString(registerViewModel.user.gender)}" />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rowPasswordRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/editTextPasswordRegister"
+                style="@style/editText_style_16"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edit_text_design_0"
+                android:gravity="center"
+                android:hint="Mật khẩu"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:text="@={registerViewModel.user.password}" />
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/textViewPasswordRegisterValidation"
+            style="@style/text_style_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="10dp"
+            android:text="Từ 9->15 kí tự (gồm chữ và số)"
+            android:textColor="@color/red"
+            android:visibility="gone"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/editTextRepeatPasswordRegister"
+                style="@style/editText_style_16"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edit_text_design_0"
+                android:gravity="center"
+                android:hint="Nhập lại mật khẩu"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:text="@={registerViewModel.user.repeatPassword}" />
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/textViewRepeatPasswordRegisterValidation"
+            style="@style/text_style_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="10dp"
+            android:text="Mật khẩu không khớp"
+            android:textColor="@color/red"
+            android:visibility="gone"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+            <ImageView
+                android:id="@+id/imgLoadRegister"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"/>
+
+            <Button
+                android:id="@+id/btnRegister2"
+                style="@style/editText_style_16"
+                android:layout_width="145dp"
+                android:layout_height="45dp"
+                android:background="@drawable/button_design_1"
+                android:text="Đăng ký"
+                android:textAllCaps="false"
+                android:textColor="@drawable/button_design_1_text" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
+</layout>
