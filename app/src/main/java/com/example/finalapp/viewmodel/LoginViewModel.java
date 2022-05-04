@@ -1,13 +1,12 @@
 package com.example.finalapp.viewmodel;
 
-import android.os.Debug;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.finalapp.model.Account;
-import com.example.finalapp.remoterepository.AccountCheckModel;
+import com.example.finalapp.remoterepository.AccountCheckPojo;
 import com.example.finalapp.remoterepository.AccountService;
 import com.example.finalapp.remoterepository.RetrofitClient;
 import com.google.gson.Gson;
@@ -21,13 +20,13 @@ public class LoginViewModel extends ViewModel {
     private static final String TAG = "AccountViewModel";
     private Account account;
     private final Retrofit retrofit;
-    private MutableLiveData<AccountCheckModel> accountCheckModel;
+    private MutableLiveData<AccountCheckPojo> accountCheckModel;
 
-    public MutableLiveData<AccountCheckModel> getAccountCheckModel() {
+    public MutableLiveData<AccountCheckPojo> getAccountCheckModel() {
         return accountCheckModel;
     }
 
-    public void setAccountCheckModel(MutableLiveData<AccountCheckModel> accountCheckModel) {
+    public void setAccountCheckModel(MutableLiveData<AccountCheckPojo> accountCheckModel) {
         this.accountCheckModel = accountCheckModel;
     }
 
@@ -47,16 +46,16 @@ public class LoginViewModel extends ViewModel {
 
     public void checkAccount(){
         AccountService accountService = retrofit.create(AccountService.class);
-        Call<AccountCheckModel> call = accountService.check(account.getEmail(), account.getPassword());
-        call.enqueue(new Callback<AccountCheckModel>() {
+        Call<AccountCheckPojo> call = accountService.check(account.getEmail(), account.getPassword());
+        call.enqueue(new Callback<AccountCheckPojo>() {
             @Override
-            public void onResponse(Call<AccountCheckModel> call, Response<AccountCheckModel> response) {
+            public void onResponse(Call<AccountCheckPojo> call, Response<AccountCheckPojo> response) {
                 Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
                 accountCheckModel.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<AccountCheckModel> call, Throwable t) {
+            public void onFailure(Call<AccountCheckPojo> call, Throwable t) {
                 Log.e(TAG, "onFailure: ");
                 accountCheckModel.setValue(null);
             }

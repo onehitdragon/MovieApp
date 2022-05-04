@@ -5,9 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.finalapp.model.Account;
 import com.example.finalapp.model.User;
-import com.example.finalapp.remoterepository.AccountCheckModel;
+import com.example.finalapp.remoterepository.AccountCheckPojo;
 import com.example.finalapp.remoterepository.AccountService;
 import com.example.finalapp.remoterepository.RetrofitClient;
 import com.google.gson.Gson;
@@ -26,7 +25,7 @@ public class RegisterViewModel extends ViewModel {
     private static final String TAG = "RegisterViewModel";
     private User user;
     private HashMap<String, String> validation;
-    private MutableLiveData<AccountCheckModel> accountCheckModel;
+    private MutableLiveData<AccountCheckPojo> accountCheckModel;
     private AccountService accountService;
     private MutableLiveData<Boolean> registerSuccess;
 
@@ -46,11 +45,11 @@ public class RegisterViewModel extends ViewModel {
         this.validation = validation;
     }
 
-    public MutableLiveData<AccountCheckModel> getAccountCheckModel() {
+    public MutableLiveData<AccountCheckPojo> getAccountCheckModel() {
         return accountCheckModel;
     }
 
-    public void setAccountCheckModel(MutableLiveData<AccountCheckModel> accountCheckModel) {
+    public void setAccountCheckModel(MutableLiveData<AccountCheckPojo> accountCheckModel) {
         this.accountCheckModel = accountCheckModel;
     }
 
@@ -129,10 +128,10 @@ public class RegisterViewModel extends ViewModel {
         pattern = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
         matcher = pattern.matcher(user.getEmail());
         if(matcher.find()){
-            Call<AccountCheckModel> call = accountService.check(user.getEmail(), "");
-            call.enqueue(new Callback<AccountCheckModel>() {
+            Call<AccountCheckPojo> call = accountService.check(user.getEmail(), "");
+            call.enqueue(new Callback<AccountCheckPojo>() {
                 @Override
-                public void onResponse(Call<AccountCheckModel> call, Response<AccountCheckModel> response) {
+                public void onResponse(Call<AccountCheckPojo> call, Response<AccountCheckPojo> response) {
                     Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
                     if(response.body().emailIsValid){
                         validation.put("email", "Email đã tồn tại");
@@ -144,14 +143,14 @@ public class RegisterViewModel extends ViewModel {
                 }
 
                 @Override
-                public void onFailure(Call<AccountCheckModel> call, Throwable t) {
+                public void onFailure(Call<AccountCheckPojo> call, Throwable t) {
                     accountCheckModel.setValue(null);
                 }
             });
         }
         else{
             validation.put("email", "Email không hợp lệ");
-            accountCheckModel.setValue(new AccountCheckModel());
+            accountCheckModel.setValue(new AccountCheckPojo());
         }
     }
 

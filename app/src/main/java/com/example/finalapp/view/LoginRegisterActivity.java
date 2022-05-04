@@ -5,7 +5,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -23,14 +22,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
 import com.example.finalapp.databinding.ActivityLoginRegisterBinding;
-import com.example.finalapp.model.Account;
-import com.example.finalapp.model.User;
 import com.example.finalapp.myanimation.MyAnimation;
 import com.example.finalapp.myanimation.MyButton2Animation;
 import com.example.finalapp.myanimation.MyButtonAnimation;
 import com.example.finalapp.mydialog.MyDialog;
 import com.example.finalapp.mydialog.MyDialogFactory;
-import com.example.finalapp.remoterepository.AccountCheckModel;
+import com.example.finalapp.remoterepository.AccountCheckPojo;
 import com.example.finalapp.viewmodel.LoginViewModel;
 import com.example.finalapp.viewmodel.RegisterViewModel;
 
@@ -101,11 +98,11 @@ public class LoginRegisterActivity extends AppCompatActivity {
         // init view model
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.setLoginViewModel(loginViewModel);
-        loginViewModel.getAccountCheckModel().observe(this, (AccountCheckModel accountCheckModel) -> {
+        loginViewModel.getAccountCheckModel().observe(this, (AccountCheckPojo accountCheckPojo) -> {
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
-                    if(accountCheckModel == null){
+                    if(accountCheckPojo == null){
                         handler.post(() -> {
                             myButton2Animation.toggleButtonAnimation();
                             MyDialog myDialog = MyDialogFactory.createErrorServerDialog(this);
@@ -113,14 +110,14 @@ public class LoginRegisterActivity extends AppCompatActivity {
                         });
                         return;
                     }
-                    if(accountCheckModel.emailIsValid){
+                    if(accountCheckPojo.emailIsValid){
                         changeBackgroundEditTextHandler(editTextUserName, 2);
                     }
                     else{
                         changeBackgroundEditTextHandler(editTextUserName, 1);
                     }
                     Thread.sleep(500);
-                    if(accountCheckModel.passwordIsValid){
+                    if(accountCheckPojo.passwordIsValid){
                         changeBackgroundEditTextHandler(editTextPassword, 2);
                     }
                     else{
@@ -128,7 +125,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     }
                     handler.post(() -> {
                         myButton2Animation.toggleButtonAnimation();
-                        if(accountCheckModel.emailIsValid && accountCheckModel.passwordIsValid){
+                        if(accountCheckPojo.emailIsValid && accountCheckPojo.passwordIsValid){
                             MyDialog myDialog = new MyDialog(this);
                             myDialog.setImageSrc(R.drawable.popcorn);
                             myDialog.setTitle("Thành công");
@@ -144,12 +141,12 @@ public class LoginRegisterActivity extends AppCompatActivity {
         });
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         binding.setRegisterViewModel(registerViewModel);
-        registerViewModel.getAccountCheckModel().observe(this, (AccountCheckModel accountCheckModel) -> {
+        registerViewModel.getAccountCheckModel().observe(this, (AccountCheckPojo accountCheckPojo) -> {
             HashMap<String, String> validation = registerViewModel.getValidation();
             new Thread(() -> {
                 try{
                     Thread.sleep(1000);
-                    if(accountCheckModel == null){
+                    if(accountCheckPojo == null){
                         handler.post(() -> {
                             myButton2RegisterAnimation.toggleButtonAnimation();
                             MyDialog myDialog = MyDialogFactory.createErrorServerDialog(this);

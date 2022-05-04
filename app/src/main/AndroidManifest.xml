@@ -18,7 +18,7 @@
             android:windowSoftInputMode="stateHidden"/>
         <!--            android:screenOrientation="portrait"-->
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>

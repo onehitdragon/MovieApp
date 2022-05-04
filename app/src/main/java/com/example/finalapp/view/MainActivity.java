@@ -5,18 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.finalapp.R;
 
-public class HomeActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private RelativeLayout wrapBtnHome, wrapBtnHistory, wrapBtnDownload, wrapBtnUser;
     private RelativeLayout currentWrapBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
         wrapBtnHome = findViewById(R.id.wrapBtnHome);
         wrapBtnHistory = findViewById(R.id.wrapBtnHistory);
         wrapBtnDownload = findViewById(R.id.wrapBtnDownload);

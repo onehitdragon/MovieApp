@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.HomeActivity"
+    tools:context=".view.MainActivity"
     android:orientation="vertical"
     android:background="@color/black_main">
     <fragment
         android:id="@+id/frameLayout"
-        android:name="com.example.finalapp.view.MovieWatchingFragment"
+        android:name="com.example.finalapp.view.HomeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
