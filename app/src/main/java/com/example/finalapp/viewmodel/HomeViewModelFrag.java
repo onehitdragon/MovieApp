@@ -3,6 +3,7 @@ package com.example.finalapp.viewmodel;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import com.example.finalapp.model.Genre;
@@ -22,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class HomeViewModel extends ViewModel {
+public class HomeViewModelFrag extends ViewModel {
     private Retrofit retrofit;
     private MovieService movieService;
     private GenreService genreService;
@@ -63,7 +64,7 @@ public class HomeViewModel extends ViewModel {
         this.currentGenre = currentGenre;
     }
 
-    public HomeViewModel() {
+    public HomeViewModelFrag() {
         listNewestMovie = new MutableLiveData<>();
         listGenre = new MutableLiveData<>();
         listMovieByGenre = new MutableLiveData<>();

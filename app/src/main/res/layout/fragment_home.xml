@@ -132,18 +132,14 @@
                 android:textSize="22sp"
                 />
         </LinearLayout>
-        <HorizontalScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewNewestList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12.5dp"
             android:layout_marginEnd="12.5dp"
             android:scrollbarSize="0dp">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycleViewNewestList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </androidx.recyclerview.widget.RecyclerView>
-        </HorizontalScrollView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <!--  filter movie area  -->
         <LinearLayout
@@ -177,18 +173,13 @@
             android:layout_marginEnd="20dp"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="#232b2b">
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:scrollbarSize="0dp">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycleViewGenreMenu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp">
                 </androidx.recyclerview.widget.RecyclerView>
-            </HorizontalScrollView>
         </androidx.cardview.widget.CardView>
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
