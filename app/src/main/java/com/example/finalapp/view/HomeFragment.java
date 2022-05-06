@@ -1,5 +1,6 @@
 package com.example.finalapp.view;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +30,7 @@ import com.example.finalapp.viewmodel.HomeViewModelFrag;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+    private Context context;
     private ImageView imageViewAvatar;
     private HomeViewModelFrag homeViewModelFrag;
     private RecyclerView recycleViewNewestList, recycleViewGenreMenu, recycleViewGenreMovieList;
@@ -35,6 +38,12 @@ public class HomeFragment extends Fragment {
     private RecycleViewGenreMenuAdapter recycleViewGenreMenuAdapter;
     private CardView currentCardViewGenreMenu;
     private RecycleViewGenreMovieListAdapter recycleViewGenreMovieListAdapter;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     @Nullable
     @Override
@@ -53,18 +62,22 @@ public class HomeFragment extends Fragment {
         recycleViewGenreMovieList = view.findViewById(R.id.recycleViewGenreMovieList);
 
         // init view
-        recycleViewNewestList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        recycleViewGenreMenu.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        recycleViewGenreMovieList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recycleViewNewestList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        recycleViewGenreMenu.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        recycleViewGenreMovieList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         if(savedInstanceState != null){
             restoreView(savedInstanceState);
         }
 
         // init
         Glide.with(this).load(R.drawable.bg3).circleCrop().into(imageViewAvatar);
-        homeViewModelFrag = new ViewModelProvider(this).get(HomeViewModelFrag.class);
+        homeViewModelFrag = new ViewModelProvider((ViewModelStoreOwner) context).get(HomeViewModelFrag.class);
+        OnMovieClick onMovieClick = (Movie movie) -> {
+            homeViewModelFrag.setCurrentMovie(movie);
+            ((MainActivity)context).openMovieIntroFragment();
+        };
         homeViewModelFrag.getListNewestMovie().observe(getViewLifecycleOwner(), (ArrayList<Movie> listNewestMovie) -> {
-            recycleViewNewestMovieListAdapter = new RecycleViewNewestMovieListAdapter(getActivity(), listNewestMovie);
+            recycleViewNewestMovieListAdapter = new RecycleViewNewestMovieListAdapter(context, listNewestMovie, onMovieClick);
             recycleViewNewestList.setAdapter(recycleViewNewestMovieListAdapter);
         });
         OnChangeColorCardViewGenreMenu onChangeColorCardViewGenreMenu = (CardView cardView) -> {
@@ -83,11 +96,11 @@ public class HomeFragment extends Fragment {
             if(homeViewModelFrag.getCurrentGenre() == null){
                 homeViewModelFrag.loadListMovieByGenre(listGenre.get(0));
             }
-            recycleViewGenreMenuAdapter = new RecycleViewGenreMenuAdapter(getActivity(), listGenre, onGenreMenuItemClickListener, onChangeColorCardViewGenreMenu, homeViewModelFrag.getCurrentGenre());
+            recycleViewGenreMenuAdapter = new RecycleViewGenreMenuAdapter(context, listGenre, onGenreMenuItemClickListener, onChangeColorCardViewGenreMenu, homeViewModelFrag.getCurrentGenre());
             recycleViewGenreMenu.setAdapter(recycleViewGenreMenuAdapter);
         });
         homeViewModelFrag.getListMovieByGenre().observe(getViewLifecycleOwner(), (ArrayList<Movie> listMovieByGenre) -> {
-            recycleViewGenreMovieListAdapter = new RecycleViewGenreMovieListAdapter(getActivity(), listMovieByGenre, homeViewModelFrag.getCurrentGenre());
+            recycleViewGenreMovieListAdapter = new RecycleViewGenreMovieListAdapter(context, listMovieByGenre, homeViewModelFrag.getCurrentGenre());
             recycleViewGenreMovieList.setAdapter(recycleViewGenreMovieListAdapter);
         });
 
@@ -98,7 +111,7 @@ public class HomeFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         int firstVisiblePositionRecycleViewNewestList = 0;
-        if(recycleViewNewestList.getLayoutManager() != null){
+        if(recycleViewNewestList != null && recycleViewNewestList.getLayoutManager() != null){
             firstVisiblePositionRecycleViewNewestList = ((LinearLayoutManager)recycleViewNewestList.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         }
         outState.putInt("firstVisiblePositionRecycleViewNewestList", firstVisiblePositionRecycleViewNewestList);
@@ -117,5 +130,9 @@ public class HomeFragment extends Fragment {
 
     public interface OnChangeColorCardViewGenreMenu{
         void change(CardView cardView);
+    }
+
+    public interface OnMovieClick{
+        void click(Movie movie);
     }
 }

@@ -31,6 +31,7 @@ public class HomeViewModelFrag extends ViewModel {
     private MutableLiveData<ArrayList<Genre>> listGenre;
     private MutableLiveData<ArrayList<Movie>> listMovieByGenre;
     private Genre currentGenre;
+    private Movie currentMovie;
 
     public MutableLiveData<ArrayList<Movie>> getListNewestMovie() {
         return listNewestMovie;
@@ -62,6 +63,14 @@ public class HomeViewModelFrag extends ViewModel {
 
     public void setCurrentGenre(Genre currentGenre) {
         this.currentGenre = currentGenre;
+    }
+
+    public Movie getCurrentMovie() {
+        return currentMovie;
+    }
+
+    public void setCurrentMovie(Movie currentMovie) {
+        this.currentMovie = currentMovie;
     }
 
     public HomeViewModelFrag() {

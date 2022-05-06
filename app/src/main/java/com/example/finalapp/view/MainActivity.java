@@ -16,8 +16,6 @@ import com.example.finalapp.R;
 public class MainActivity extends AppCompatActivity {
     private RelativeLayout wrapBtnHome, wrapBtnHistory, wrapBtnDownload, wrapBtnUser;
     private RelativeLayout currentWrapBtn;
-    private FragmentManager fragmentManager;
-    private HomeFragment homeFragment = new HomeFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +29,9 @@ public class MainActivity extends AppCompatActivity {
         currentWrapBtn = wrapBtnHome;
 
         // init
-//        fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.frameLayout, homeFragment);
-//        fragmentTransaction.commit();
+        if(savedInstanceState == null){
+            openHomeFragment();
+        }
 
         // event
         View.OnClickListener wrapBtnOnClickListener = (View view) -> {
@@ -45,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         wrapBtnDownload.setOnClickListener(wrapBtnOnClickListener);
         wrapBtnUser.setOnClickListener(wrapBtnOnClickListener);
     }
+
     private void activeWrapBtn(RelativeLayout wrapBtn){
         if(currentWrapBtn == wrapBtn) return;
         wrapBtn.setAlpha(1);
@@ -54,5 +52,28 @@ public class MainActivity extends AppCompatActivity {
         currentWrapBtn.getChildAt(1).setVisibility(ViewGroup.INVISIBLE);
         currentWrapBtn.setBackgroundResource(0);
         currentWrapBtn = wrapBtn;
+    }
+
+    private void openFragment(Fragment fragment, boolean addToBackStack){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        if(addToBackStack) fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void closeFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
+    }
+
+    public void openHomeFragment(){
+        HomeFragment homeFragment = new HomeFragment();
+        openFragment(homeFragment, false);
+    }
+
+    public void openMovieIntroFragment(){
+        MovieIntroFragment movieIntroFragment = new MovieIntroFragment();
+        openFragment(movieIntroFragment, true);
     }
 }

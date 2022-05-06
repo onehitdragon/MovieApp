@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
 import com.example.finalapp.model.Movie;
+import com.example.finalapp.view.HomeFragment;
 
 import java.util.ArrayList;
 
 public class RecycleViewNewestMovieListAdapter extends RecyclerView.Adapter<RecycleViewNewestMovieListAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<Movie> listMovie;
+    private HomeFragment.OnMovieClick onMovieClick;
 
     public ArrayList<Movie> getListMovie() {
         return listMovie;
@@ -28,9 +30,10 @@ public class RecycleViewNewestMovieListAdapter extends RecyclerView.Adapter<Recy
         this.listMovie = listMovie;
     }
 
-    public RecycleViewNewestMovieListAdapter(Context context, ArrayList<Movie> listMovie) {
+    public RecycleViewNewestMovieListAdapter(Context context, ArrayList<Movie> listMovie, HomeFragment.OnMovieClick onMovieClick) {
         this.context = context;
         this.listMovie = listMovie;
+        this.onMovieClick = onMovieClick;
     }
 
     @NonNull
@@ -63,6 +66,9 @@ public class RecycleViewNewestMovieListAdapter extends RecyclerView.Adapter<Recy
         public void bind(Movie movie){
             Glide.with(context).load(movie.getAvatarUrl()).into(imageViewAvatar);
             textViewRating.setText(String.valueOf(movie.getRating()));
+            itemView.setOnClickListener((View view) -> {
+                onMovieClick.click(movie);
+            });
         }
     }
 }
