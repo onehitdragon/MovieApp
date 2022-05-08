@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
 import com.example.finalapp.model.Genre;
 import com.example.finalapp.model.Movie;
+import com.example.finalapp.view.HomeFragment;
 
 import java.util.ArrayList;
 
@@ -21,11 +22,13 @@ public class RecycleViewGenreMovieListAdapter extends RecyclerView.Adapter<Recyc
     private Context context;
     private ArrayList<Movie> listMovie;
     private Genre currentGenre;
+    private HomeFragment.OnMovieClick onMovieClick;
 
-    public RecycleViewGenreMovieListAdapter(Context context, ArrayList<Movie> listMovie, Genre currentGenre) {
+    public RecycleViewGenreMovieListAdapter(Context context, ArrayList<Movie> listMovie, Genre currentGenre, HomeFragment.OnMovieClick onMovieClick) {
         this.context = context;
         this.listMovie = listMovie;
         this.currentGenre = currentGenre;
+        this.onMovieClick = onMovieClick;
     }
 
     @NonNull
@@ -64,6 +67,9 @@ public class RecycleViewGenreMovieListAdapter extends RecyclerView.Adapter<Recyc
             textViewRating.setText(String.valueOf(movie.getRating()));
             textViewGenreName.setText(currentGenre.getName());
             textViewEngName.setText(movie.getEngTitle());
+            itemView.setOnClickListener((View view) -> {
+                onMovieClick.click(movie);
+            });
         }
     }
 }

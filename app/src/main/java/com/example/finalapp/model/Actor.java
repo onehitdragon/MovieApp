@@ -1,6 +1,7 @@
 package com.example.finalapp.model;
 
 import com.example.finalapp.remoterepository.ActorPojo;
+import com.example.finalapp.remoterepository.BaseUrl;
 
 public class Actor {
     private int id;
@@ -33,7 +34,7 @@ public class Actor {
 
     public Actor(int id, String avatarUrl, String fullName) {
         this.id = id;
-        this.avatarUrl = avatarUrl;
+        this.avatarUrl = BaseUrl.URL + avatarUrl;
         this.fullName = fullName;
     }
 

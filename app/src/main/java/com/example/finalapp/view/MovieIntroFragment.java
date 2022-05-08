@@ -32,7 +32,7 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 public class MovieIntroFragment extends Fragment {
     private Context context;
     private HomeViewModelFrag homeViewModelFrag;
-    private Button btnBack;
+    private Button btnBack, btnWatchMovie;
     private ImageView imageViewAvatar;
     private FragmentMovieIntroBinding binding;
     private RecyclerView recycleViewGenreOfMovie;
@@ -59,6 +59,7 @@ public class MovieIntroFragment extends Fragment {
         btnBack = view.findViewById(R.id.btnBack);
         imageViewAvatar = view.findViewById(R.id.imageViewAvatar);
         recycleViewGenreOfMovie = view.findViewById(R.id.recycleViewGenreOfMovie);
+        btnWatchMovie = view.findViewById(R.id.btnWatchMovie);
 
         // init view
         FlexboxLayoutManager flexboxLayoutManager = new FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP);
@@ -75,6 +76,9 @@ public class MovieIntroFragment extends Fragment {
         // event
         btnBack.setOnClickListener((View v) -> {
             ((MainActivity) context).closeFragment();
+        });
+        btnWatchMovie.setOnClickListener((View v) -> {
+            ((MainActivity)context).openMovieWatchingFragment();
         });
     }
 }

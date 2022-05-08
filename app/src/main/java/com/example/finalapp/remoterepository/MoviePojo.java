@@ -6,6 +6,7 @@ public class MoviePojo {
     public DirectorPojo director;
     public ArrayList<ActorPojo> listActor;
     public ArrayList<GenrePojo> listGenre;
+    public ArrayList<EpisodePojo> listEpisode;
     public String title;
     public String engTitle;
     public String avatarUrl;

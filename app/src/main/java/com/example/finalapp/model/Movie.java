@@ -2,6 +2,7 @@ package com.example.finalapp.model;
 
 import com.example.finalapp.remoterepository.ActorPojo;
 import com.example.finalapp.remoterepository.BaseUrl;
+import com.example.finalapp.remoterepository.EpisodePojo;
 import com.example.finalapp.remoterepository.GenrePojo;
 import com.example.finalapp.remoterepository.MoviePojo;
 import com.example.finalapp.remoterepository.RetrofitClient;
@@ -13,6 +14,7 @@ public class Movie {
     private Director director;
     private ArrayList<Actor> listActor;
     private ArrayList<Genre> listGenre;
+    private ArrayList<Episode> listEpisode;
     private String title;
     private String engTitle;
     private String avatarUrl;
@@ -52,6 +54,14 @@ public class Movie {
 
     public void setListGenre(ArrayList<Genre> listGenre) {
         this.listGenre = listGenre;
+    }
+
+    public ArrayList<Episode> getListEpisode() {
+        return listEpisode;
+    }
+
+    public void setListEpisode(ArrayList<Episode> listEpisode) {
+        this.listEpisode = listEpisode;
     }
 
     public String getTitle() {
@@ -118,11 +128,12 @@ public class Movie {
         this.movieLength = movieLength;
     }
 
-    public Movie(int id, Director director, ArrayList<Actor> listActor, ArrayList<Genre> listGenre, String title, String engTitle, String avatarUrl, int releaseYear, String country, float rating, String content, int movieLength) {
+    public Movie(int id, Director director, ArrayList<Actor> listActor, ArrayList<Genre> listGenre, ArrayList<Episode> listEpisode, String title, String engTitle, String avatarUrl, int releaseYear, String country, float rating, String content, int movieLength) {
         this.id = id;
         this.director = director;
         this.listActor = listActor;
         this.listGenre = listGenre;
+        this.listEpisode = listEpisode;
         this.title = title;
         this.engTitle = engTitle;
         this.avatarUrl = BaseUrl.URL + avatarUrl;
@@ -137,6 +148,7 @@ public class Movie {
         Director director = Director.convertPojo(moviePojo.director);
         ArrayList<Genre> listGenre = new ArrayList<>();
         ArrayList<Actor> listActor = new ArrayList<>();
+        ArrayList<Episode> listEpisode = new ArrayList<>();
         for(GenrePojo genrePojo : moviePojo.listGenre){
             Genre genre = Genre.convertPojo(genrePojo);
             listGenre.add(genre);
@@ -145,7 +157,11 @@ public class Movie {
             Actor actor = Actor.convertPojo(actorPojo);
             listActor.add(actor);
         }
-        Movie movie = new Movie(moviePojo.id, director, listActor, listGenre, moviePojo.title,
+        for(EpisodePojo episodePojo : moviePojo.listEpisode){
+            Episode episode = Episode.convertPojo(episodePojo);
+            listEpisode.add(episode);
+        }
+        Movie movie = new Movie(moviePojo.id, director, listActor, listGenre, listEpisode, moviePojo.title,
                 moviePojo.engTitle, moviePojo.avatarUrl, moviePojo.releaseYear, moviePojo.country, moviePojo.rating,
                 moviePojo.content, moviePojo.movieLength);
 

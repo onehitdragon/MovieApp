@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
     private RecyclerView recycleViewNewestList, recycleViewGenreMenu, recycleViewGenreMovieList;
     private RecycleViewNewestMovieListAdapter recycleViewNewestMovieListAdapter;
     private RecycleViewGenreMenuAdapter recycleViewGenreMenuAdapter;
-    private CardView currentCardViewGenreMenu;
     private RecycleViewGenreMovieListAdapter recycleViewGenreMovieListAdapter;
 
     @Override
@@ -80,27 +79,18 @@ public class HomeFragment extends Fragment {
             recycleViewNewestMovieListAdapter = new RecycleViewNewestMovieListAdapter(context, listNewestMovie, onMovieClick);
             recycleViewNewestList.setAdapter(recycleViewNewestMovieListAdapter);
         });
-        OnChangeColorCardViewGenreMenu onChangeColorCardViewGenreMenu = (CardView cardView) -> {
-            if(cardView == currentCardViewGenreMenu) return;
-            cardView.setCardBackgroundColor(Color.parseColor("#414a4c"));
-            if(currentCardViewGenreMenu != null){
-                currentCardViewGenreMenu.setCardBackgroundColor(getResources().getColor(R.color.transparent));
-            }
-            currentCardViewGenreMenu = cardView;
-        };
-        OnGenreMenuItemClickListener onGenreMenuItemClickListener = (CardView cardView, Genre genre) -> {
-            onChangeColorCardViewGenreMenu.change(cardView);
+        OnGenreMenuItemClickListener onGenreMenuItemClickListener = (Genre genre) -> {
             homeViewModelFrag.loadListMovieByGenre(genre);
         };
         homeViewModelFrag.getListGenre().observe(getViewLifecycleOwner(), (ArrayList<Genre> listGenre) -> {
             if(homeViewModelFrag.getCurrentGenre() == null){
                 homeViewModelFrag.loadListMovieByGenre(listGenre.get(0));
             }
-            recycleViewGenreMenuAdapter = new RecycleViewGenreMenuAdapter(context, listGenre, onGenreMenuItemClickListener, onChangeColorCardViewGenreMenu, homeViewModelFrag.getCurrentGenre());
+            recycleViewGenreMenuAdapter = new RecycleViewGenreMenuAdapter(context, listGenre, onGenreMenuItemClickListener, homeViewModelFrag.getCurrentGenre());
             recycleViewGenreMenu.setAdapter(recycleViewGenreMenuAdapter);
         });
         homeViewModelFrag.getListMovieByGenre().observe(getViewLifecycleOwner(), (ArrayList<Movie> listMovieByGenre) -> {
-            recycleViewGenreMovieListAdapter = new RecycleViewGenreMovieListAdapter(context, listMovieByGenre, homeViewModelFrag.getCurrentGenre());
+            recycleViewGenreMovieListAdapter = new RecycleViewGenreMovieListAdapter(context, listMovieByGenre, homeViewModelFrag.getCurrentGenre(), onMovieClick);
             recycleViewGenreMovieList.setAdapter(recycleViewGenreMovieListAdapter);
         });
 
@@ -125,11 +115,7 @@ public class HomeFragment extends Fragment {
     }
 
     public interface OnGenreMenuItemClickListener{
-        void click(CardView cardView, Genre genre);
-    }
-
-    public interface OnChangeColorCardViewGenreMenu{
-        void change(CardView cardView);
+        void click(Genre genre);
     }
 
     public interface OnMovieClick{

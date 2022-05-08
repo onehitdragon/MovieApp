@@ -76,4 +76,9 @@ public class MainActivity extends AppCompatActivity {
         MovieIntroFragment movieIntroFragment = new MovieIntroFragment();
         openFragment(movieIntroFragment, true);
     }
+
+    public void openMovieWatchingFragment(){
+        MovieWatchingFragment movieWatchingFragment = new MovieWatchingFragment();
+        openFragment(movieWatchingFragment, true);
+    }
 }

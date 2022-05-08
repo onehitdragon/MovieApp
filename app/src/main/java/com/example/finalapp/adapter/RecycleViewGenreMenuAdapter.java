@@ -1,6 +1,7 @@
 package com.example.finalapp.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,18 +21,16 @@ import java.util.ArrayList;
 public class RecycleViewGenreMenuAdapter extends RecyclerView.Adapter<RecycleViewGenreMenuAdapter.MyViewHolder> {
     private final Context context;
     private final ArrayList<Genre> listGenre;
-    private final Genre currentGenre;
+    private Genre currentGenre;
+    private View currentGenreView;
     private final HomeFragment.OnGenreMenuItemClickListener onGenreMenuItemClickListener;
-    private final HomeFragment.OnChangeColorCardViewGenreMenu onChangeColorCardViewGenreMenu;
 
     public RecycleViewGenreMenuAdapter(Context context, ArrayList<Genre> listGenre,
                                        HomeFragment.OnGenreMenuItemClickListener onGenreMenuItemClickListener,
-                                       HomeFragment.OnChangeColorCardViewGenreMenu onChangeColorCardViewGenreMenu,
                                        Genre currentGenre) {
         this.context = context;
         this.listGenre = listGenre;
         this.onGenreMenuItemClickListener = onGenreMenuItemClickListener;
-        this.onChangeColorCardViewGenreMenu = onChangeColorCardViewGenreMenu;
         this.currentGenre = currentGenre;
     }
 
@@ -60,13 +59,20 @@ public class RecycleViewGenreMenuAdapter extends RecyclerView.Adapter<RecycleVie
             textViewNameGenre = itemView.findViewById(R.id.textViewNameGenre);
         }
         public void bind(Genre genre){
+            if(currentGenre == genre){
+                currentGenreView = itemView;
+                ((CardView)currentGenreView).setCardBackgroundColor(Color.parseColor("#414a4c"));
+            }
             textViewNameGenre.setText(genre.getName());
             itemView.setOnClickListener((View view) -> {
-                onGenreMenuItemClickListener.click((CardView) view , genre);
+                if(genre != currentGenre){
+                    ((CardView)currentGenreView).setCardBackgroundColor(Color.TRANSPARENT);
+                    currentGenreView = itemView;
+                    ((CardView)currentGenreView).setCardBackgroundColor(Color.parseColor("#414a4c"));
+                    currentGenre = genre;
+                    onGenreMenuItemClickListener.click(genre);
+                }
             });
-            if(currentGenre == genre){
-                onChangeColorCardViewGenreMenu.change((CardView) itemView);
-            }
         }
     }
 }
