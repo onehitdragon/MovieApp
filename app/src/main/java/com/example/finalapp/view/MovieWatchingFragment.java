@@ -1,6 +1,7 @@
 package com.example.finalapp.view;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.media.MediaPlayer;
@@ -15,15 +16,20 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.VideoView;
 
+import com.example.finalapp.MyVideoPlayer.MyVideoPlayer;
 import com.example.finalapp.R;
 import com.example.finalapp.adapter.RecycleViewActorListAdapter;
 import com.example.finalapp.adapter.RecycleViewEpisodeListAdapter;
@@ -47,10 +53,7 @@ public class MovieWatchingFragment extends Fragment {
     private RecyclerView recycleViewActorList, recycleViewEpisodeList;
     private RecycleViewActorListAdapter recycleViewActorListAdapter;
     private RecycleViewEpisodeListAdapter recycleViewEpisodeListAdapter;
-    private View currentEpisodeView;
-    private VideoView videoView;
-    private SeekBar progressBar;
-    private View control;
+    private MyVideoPlayer myVideoPlayer;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -69,9 +72,6 @@ public class MovieWatchingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // find view
-        videoView = view.findViewById(R.id.videoView);
-        progressBar = view.findViewById(R.id.seekBar);
-        control = view.findViewById(R.id.control);
         recycleViewActorList = view.findViewById(R.id.recycleViewActorList);
         recycleViewEpisodeList = view.findViewById(R.id.recycleViewEpisodeList);
 
@@ -89,34 +89,30 @@ public class MovieWatchingFragment extends Fragment {
         movieWatchingViewModelFrag = new ViewModelProvider(this).get(MovieWatchingViewModelFrag.class);
         if(movieWatchingViewModelFrag.getCurrentEpisode() == null){
             movieWatchingViewModelFrag.setCurrentEpisode(movie.getListEpisode().get(0));
-            startVideo();
         }
         OnEpisodeClick onEpisodeClick = (Episode episode) -> {
             movieWatchingViewModelFrag.setCurrentEpisode(episode);
         };
-        recycleViewEpisodeListAdapter = new RecycleViewEpisodeListAdapter(context, movie.getListEpisode(), currentEpisodeView, movieWatchingViewModelFrag.getCurrentEpisode(), onEpisodeClick);
+        recycleViewEpisodeListAdapter = new RecycleViewEpisodeListAdapter(context, movie.getListEpisode(), movieWatchingViewModelFrag.getCurrentEpisode(), onEpisodeClick);
         recycleViewEpisodeList.setAdapter(recycleViewEpisodeListAdapter);
 
         //
+        myVideoPlayer = new MyVideoPlayer(context, view.findViewById(R.id.videoView), view.findViewById(R.id.control));
+        myVideoPlayer.initVideo();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            myVideoPlayer.zoomOutVideo();
+        }
+        else{
+            myVideoPlayer.zoomInVideo();
+        }
     }
 
     public interface OnEpisodeClick{
         void click(Episode episode);
-    }
-
-    private void startVideo(){
-        String url = "http://192.168.1.153:5000/UserData/MovieSource/highkick1/1.mp4";
-        videoView.setVideoURI(Uri.parse(url));
-        videoView.start();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                float videoHeight = videoView.getHeight();
-                LayoutParams layoutParams = control.getLayoutParams();
-                layoutParams.height = (int) videoHeight;
-                control.setLayoutParams(layoutParams);
-                Log.e("", "height: " + videoHeight);
-            }
-        });
     }
 }

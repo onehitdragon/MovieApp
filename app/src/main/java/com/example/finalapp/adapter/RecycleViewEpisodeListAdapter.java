@@ -25,14 +25,9 @@ public class RecycleViewEpisodeListAdapter extends RecyclerView.Adapter<RecycleV
     private View currentEpisodeView;
     private MovieWatchingFragment.OnEpisodeClick onEpisodeClick;
 
-    public void setCurrentEpisode(Episode currentEpisode) {
-        this.currentEpisode = currentEpisode;
-    }
-
-    public RecycleViewEpisodeListAdapter(Context context, ArrayList<Episode> listEpisode, View currentEpisodeView, Episode currentEpisode, MovieWatchingFragment.OnEpisodeClick onEpisodeClick) {
+    public RecycleViewEpisodeListAdapter(Context context, ArrayList<Episode> listEpisode, Episode currentEpisode, MovieWatchingFragment.OnEpisodeClick onEpisodeClick) {
         this.context = context;
         this.listEpisode = listEpisode;
-        this.currentEpisodeView = currentEpisodeView;
         this.currentEpisode = currentEpisode;
         this.onEpisodeClick = onEpisodeClick;
     }
