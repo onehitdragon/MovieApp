@@ -44,17 +44,12 @@ public class MyVideoPlayer {
     }
 
     public void initVideo(){
-        String url = "http://10.0.2.2:5000/UserData/MovieSource/Conan/1.mp4";
-        //url = "https://pouch.jumpshare.com/preview/drM4im3xxR1gMoXUX1AadF-Owb0FvIlxHDUSO_PFadnP6nzLUlN_VVvDz9gIhTJoPfyRWQpc1GqtO8as-dNEhUd7E_GJKrW9S7aBjkGHeDc03FfWQWXBRSa4d0QPPgvT.mp4";
-        videoView.setVideoPath(url);
-
         // find view
         ImageView btnStart2 = control.findViewById(R.id.btnStart2);
         ImageView btnResize = control.findViewById(R.id.btnResize);
         TextView textViewTotalTime = control.findViewById(R.id.textViewTotalTime);
         ImageView btnSeekBackward = control.findViewById(R.id.btnSeekBackward);
         ImageView btnSeekForward = control.findViewById(R.id.btnSeekForward);
-
 
         // init
         View.OnClickListener btnStartClick = (View view) -> {
@@ -79,11 +74,12 @@ public class MyVideoPlayer {
                 int duration = videoView.getDuration();
                 seekBar.setMax(duration);
                 textViewTotalTime.setText(millisecondToTime(duration));
+
+                // thread
                 createThread();
                 thread.start();
                 createThreadHideControl();
                 threadHideControl.start();
-                startVideo();
 
                 // event
                 btnStart.setOnClickListener(btnStartClick);
@@ -125,6 +121,9 @@ public class MyVideoPlayer {
                     createThreadHideControl();
                     threadHideControl.start();
                 });
+
+                //
+                btnStart.performClick();
             }
         });
         videoView.setOnCompletionListener((MediaPlayer mediaPlayer) -> {
@@ -245,7 +244,9 @@ public class MyVideoPlayer {
             }
             while (current < duration);
             btnStart.post(() -> {
-                btnStart.performClick();
+                if(isStartingVideo){
+                    btnStart.performClick();
+                }
             });
         });
     }
@@ -261,5 +262,15 @@ public class MyVideoPlayer {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void playFromUrl(String url){
+        if(thread != null && thread.isAlive()){
+            thread.interrupt();
+        }
+        if(threadHideControl != null && threadHideControl.isAlive()){
+            threadHideControl.interrupt();
+        }
+        videoView.setVideoPath(url);
     }
 }

@@ -32,6 +32,8 @@ public class HomeViewModelFrag extends ViewModel {
     private MutableLiveData<ArrayList<Movie>> listMovieByGenre;
     private Genre currentGenre;
     private Movie currentMovie;
+    private MutableLiveData<ArrayList<Movie>> listSearchResult;
+    private String currentKey;
 
     public MutableLiveData<ArrayList<Movie>> getListNewestMovie() {
         return listNewestMovie;
@@ -73,6 +75,18 @@ public class HomeViewModelFrag extends ViewModel {
         this.currentMovie = currentMovie;
     }
 
+    public MutableLiveData<ArrayList<Movie>> getListSearchResult() {
+        return listSearchResult;
+    }
+
+    public void setListSearchResult(MutableLiveData<ArrayList<Movie>> listSearchResult) {
+        this.listSearchResult = listSearchResult;
+    }
+
+    public String getCurrentKey() {
+        return currentKey;
+    }
+
     public HomeViewModelFrag() {
         listNewestMovie = new MutableLiveData<>();
         listGenre = new MutableLiveData<>();
@@ -80,6 +94,8 @@ public class HomeViewModelFrag extends ViewModel {
         retrofit = RetrofitClient.createRetrofit();
         movieService = retrofit.create(MovieService.class);
         genreService = retrofit.create(GenreService.class);
+        listSearchResult = new MutableLiveData<>();
+        currentKey = "";
 
         loadListNewestMovie();
         loadListGenre();
@@ -152,5 +168,27 @@ public class HomeViewModelFrag extends ViewModel {
             }
         });
         currentGenre = genre;
+    }
+
+    public void searchMovie(String key){
+        if(key.equals(currentKey)) return;
+        Call<ArrayList<MoviePojo>> call = movieService.searchMovie(key);
+        call.enqueue(new Callback<ArrayList<MoviePojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<MoviePojo>> call, Response<ArrayList<MoviePojo>> response) {
+                Log.e("TAG", "onResponse: " + new Gson().toJson(response.body()));
+                ArrayList<Movie> listSearchResultResult = new ArrayList<>();
+                for (MoviePojo moviePojo : response.body()) {
+                    listSearchResultResult.add(Movie.convertPojo(moviePojo));
+                }
+                listSearchResult.setValue(listSearchResultResult);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<MoviePojo>> call, Throwable t) {
+                Log.e("TAG", "Fail: " + t.getMessage());
+            }
+        });
+        currentKey = key;
     }
 }

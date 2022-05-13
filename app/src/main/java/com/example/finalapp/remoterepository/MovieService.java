@@ -13,4 +13,7 @@ public interface MovieService {
 
     @GET("Movie/ListMovieByGenre")
     Call<ArrayList<MoviePojo>> getListMovieByGenre(@Query("idGenre") int idGenre);
+
+    @GET("Movie/Search")
+    Call<ArrayList<MoviePojo>> searchMovie(@Query("key") String key);
 }

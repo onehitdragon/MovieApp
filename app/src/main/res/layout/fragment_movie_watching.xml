@@ -34,7 +34,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/playing_icon" />
+                    android:src="@drawable/pausing_icon" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_marginEnd="10dp"
-                            android:src="@drawable/playing_icon"/>
+                            android:src="@drawable/pausing_icon"/>
                         <ImageView
                             android:id="@+id/btnSeekBackward"
                             android:layout_width="25dp"

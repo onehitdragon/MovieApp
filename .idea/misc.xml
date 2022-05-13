@@ -39,7 +39,7 @@
         <entry key="..\:/finalapp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/actor_item.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/episode_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_intro.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_watching.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/genre_item.xml" value="0.25" />
@@ -50,6 +50,7 @@
         <entry key="..\:/finalapp/app/src/main/res/layout/message_dialog.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/movie_genre_list.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/newest_movie_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/search_result_item.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

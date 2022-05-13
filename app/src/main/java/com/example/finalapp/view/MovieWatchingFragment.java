@@ -76,6 +76,8 @@ public class MovieWatchingFragment extends Fragment {
         recycleViewEpisodeList = view.findViewById(R.id.recycleViewEpisodeList);
 
         // init view
+        myVideoPlayer = new MyVideoPlayer(context, view.findViewById(R.id.videoView), view.findViewById(R.id.control));
+        myVideoPlayer.initVideo();
         recycleViewActorList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         FlexboxLayoutManager flexboxLayoutManager = new FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP);
         recycleViewEpisodeList.setLayoutManager(flexboxLayoutManager);
@@ -90,15 +92,13 @@ public class MovieWatchingFragment extends Fragment {
         if(movieWatchingViewModelFrag.getCurrentEpisode() == null){
             movieWatchingViewModelFrag.setCurrentEpisode(movie.getListEpisode().get(0));
         }
+        myVideoPlayer.playFromUrl(movieWatchingViewModelFrag.getCurrentEpisode().getSourceUrl());
         OnEpisodeClick onEpisodeClick = (Episode episode) -> {
             movieWatchingViewModelFrag.setCurrentEpisode(episode);
+            myVideoPlayer.playFromUrl(episode.getSourceUrl());
         };
         recycleViewEpisodeListAdapter = new RecycleViewEpisodeListAdapter(context, movie.getListEpisode(), movieWatchingViewModelFrag.getCurrentEpisode(), onEpisodeClick);
         recycleViewEpisodeList.setAdapter(recycleViewEpisodeListAdapter);
-
-        //
-        myVideoPlayer = new MyVideoPlayer(context, view.findViewById(R.id.videoView), view.findViewById(R.id.control));
-        myVideoPlayer.initVideo();
     }
 
     @Override
