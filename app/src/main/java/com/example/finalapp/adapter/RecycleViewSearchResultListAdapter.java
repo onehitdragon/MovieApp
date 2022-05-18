@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class RecycleViewSearchResultListAdapter extends RecyclerView.Adapter<RecycleViewSearchResultListAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<Movie> listMovie;
-    private HomeFragment.OnMovieClick onMovieClick;
+    private Movie.OnMovieClick onMovieClick;
 
-    public RecycleViewSearchResultListAdapter(Context context, ArrayList<Movie> listMovie, HomeFragment.OnMovieClick onMovieClick) {
+    public RecycleViewSearchResultListAdapter(Context context, ArrayList<Movie> listMovie, Movie.OnMovieClick onMovieClick) {
         this.context = context;
         this.listMovie = listMovie;
         this.onMovieClick = onMovieClick;

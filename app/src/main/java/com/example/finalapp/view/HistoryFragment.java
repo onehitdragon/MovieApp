@@ -17,8 +17,11 @@ import android.view.ViewGroup;
 
 import com.example.finalapp.R;
 import com.example.finalapp.adapter.RecycleViewHistoryListAdapter;
+import com.example.finalapp.localrepository.HistoryMovieRepository;
 import com.example.finalapp.model.HistoryMovie;
+import com.example.finalapp.model.Movie;
 import com.example.finalapp.viewmodel.HistoryViewModelFrag;
+import com.example.finalapp.viewmodel.HomeViewModelFrag;
 
 import java.util.ArrayList;
 
@@ -54,9 +57,13 @@ public class HistoryFragment extends Fragment {
 
         // init
         historyViewModelFrag = new ViewModelProvider((MainActivity) context).get(HistoryViewModelFrag.class);
+        HomeViewModelFrag homeViewModelFrag = new ViewModelProvider((MainActivity) context).get(HomeViewModelFrag.class);
+        Movie.OnMovieClick onMovieClick = (Movie movie) -> {
+            homeViewModelFrag.setCurrentMovie(movie);
+            ((MainActivity) context).openMovieIntroFragment();
+        };
         historyViewModelFrag.getListHistoryMovie().observe(getViewLifecycleOwner(), (ArrayList<HistoryMovie> listHistoryMovie) -> {
-            Log.e("TAG", "onViewCreated: " +  listHistoryMovie.size());
-            recycleViewHistoryListAdapter = new RecycleViewHistoryListAdapter(context, listHistoryMovie);
+            recycleViewHistoryListAdapter = new RecycleViewHistoryListAdapter(context, listHistoryMovie, onMovieClick);
             recycleViewHistoryList.setAdapter(recycleViewHistoryListAdapter);
         });
         historyViewModelFrag.loadHistoryMovie();

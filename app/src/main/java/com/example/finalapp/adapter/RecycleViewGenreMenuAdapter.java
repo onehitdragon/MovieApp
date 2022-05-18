@@ -66,7 +66,9 @@ public class RecycleViewGenreMenuAdapter extends RecyclerView.Adapter<RecycleVie
             textViewNameGenre.setText(genre.getName());
             itemView.setOnClickListener((View view) -> {
                 if(genre != currentGenre){
-                    ((CardView)currentGenreView).setCardBackgroundColor(Color.TRANSPARENT);
+                    if(currentGenreView != null){
+                        ((CardView)currentGenreView).setCardBackgroundColor(Color.TRANSPARENT);
+                    }
                     currentGenreView = itemView;
                     ((CardView)currentGenreView).setCardBackgroundColor(Color.parseColor("#414a4c"));
                     currentGenre = genre;

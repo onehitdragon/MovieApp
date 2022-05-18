@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
 import com.example.finalapp.model.HistoryMovie;
+import com.example.finalapp.model.Movie;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,10 +21,12 @@ import java.util.Calendar;
 public class RecycleViewHistoryListAdapter extends RecyclerView.Adapter<RecycleViewHistoryListAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<HistoryMovie> listMovie;
+    private Movie.OnMovieClick onMovieClick;
 
-    public RecycleViewHistoryListAdapter(Context context, ArrayList<HistoryMovie> listMovie) {
+    public RecycleViewHistoryListAdapter(Context context, ArrayList<HistoryMovie> listMovie, Movie.OnMovieClick onMovieClick) {
         this.context = context;
         this.listMovie = listMovie;
+        this.onMovieClick = onMovieClick;
     }
 
     @NonNull
@@ -62,7 +65,7 @@ public class RecycleViewHistoryListAdapter extends RecyclerView.Adapter<RecycleV
             textViewGenreName.setText(historyMovie.calcPreviousTime());
             textViewEngName.setText(historyMovie.getEngTitle());
             itemView.setOnClickListener((View view) -> {
-
+                onMovieClick.click(historyMovie);
             });
         }
     }

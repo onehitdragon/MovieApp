@@ -168,4 +168,8 @@ public class Movie {
 
         return movie;
     }
+
+    public interface OnMovieClick{
+        void click(Movie movie);
+    }
 }

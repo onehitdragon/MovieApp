@@ -22,9 +22,9 @@ public class RecycleViewGenreMovieListAdapter extends RecyclerView.Adapter<Recyc
     private Context context;
     private ArrayList<Movie> listMovie;
     private Genre currentGenre;
-    private HomeFragment.OnMovieClick onMovieClick;
+    private Movie.OnMovieClick onMovieClick;
 
-    public RecycleViewGenreMovieListAdapter(Context context, ArrayList<Movie> listMovie, Genre currentGenre, HomeFragment.OnMovieClick onMovieClick) {
+    public RecycleViewGenreMovieListAdapter(Context context, ArrayList<Movie> listMovie, Genre currentGenre, Movie.OnMovieClick onMovieClick) {
         this.context = context;
         this.listMovie = listMovie;
         this.currentGenre = currentGenre;

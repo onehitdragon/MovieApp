@@ -87,9 +87,9 @@ public class HomeFragment extends Fragment {
         // init
         Glide.with(this).load(R.drawable.bg3).circleCrop().into(imageViewAvatar);
         homeViewModelFrag = new ViewModelProvider((ViewModelStoreOwner) context).get(HomeViewModelFrag.class);
-        OnMovieClick onMovieClick = (Movie movie) -> {
+        Movie.OnMovieClick onMovieClick = (Movie movie) -> {
             homeViewModelFrag.setCurrentMovie(movie);
-            ((MainActivity)context).openMovieIntroFragment();
+            ((MainActivity) context).openMovieIntroFragment();
         };
         homeViewModelFrag.getListNewestMovie().observe(getViewLifecycleOwner(), (ArrayList<Movie> listNewestMovie) -> {
             recycleViewNewestMovieListAdapter = new RecycleViewNewestMovieListAdapter(context, listNewestMovie, onMovieClick);
@@ -160,9 +160,5 @@ public class HomeFragment extends Fragment {
 
     public interface OnGenreMenuItemClickListener{
         void click(Genre genre);
-    }
-
-    public interface OnMovieClick{
-        void click(Movie movie);
     }
 }

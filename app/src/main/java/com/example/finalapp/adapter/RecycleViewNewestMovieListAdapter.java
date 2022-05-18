@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class RecycleViewNewestMovieListAdapter extends RecyclerView.Adapter<RecycleViewNewestMovieListAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<Movie> listMovie;
-    private HomeFragment.OnMovieClick onMovieClick;
+    private Movie.OnMovieClick onMovieClick;
 
     public ArrayList<Movie> getListMovie() {
         return listMovie;
@@ -30,7 +30,7 @@ public class RecycleViewNewestMovieListAdapter extends RecyclerView.Adapter<Recy
         this.listMovie = listMovie;
     }
 
-    public RecycleViewNewestMovieListAdapter(Context context, ArrayList<Movie> listMovie, HomeFragment.OnMovieClick onMovieClick) {
+    public RecycleViewNewestMovieListAdapter(Context context, ArrayList<Movie> listMovie, Movie.OnMovieClick onMovieClick) {
         this.context = context;
         this.listMovie = listMovie;
         this.onMovieClick = onMovieClick;

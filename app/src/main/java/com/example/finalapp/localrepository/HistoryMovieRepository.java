@@ -21,14 +21,20 @@ public class HistoryMovieRepository {
     }
 
     public void insert(HistoryMovie historyMovie){
-        SQLiteDatabase DB = mySqliteOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("HistoryMovie", gson.toJson(historyMovie));
-        delete(historyMovie);
+        if(!delete(historyMovie)){
+            if(get().size() >= 5){
+                deleteMostLater();
+            }
+        }
+
+        // insert
+        SQLiteDatabase DB = mySqliteOpenHelper.getWritableDatabase();
         DB.insert("HistoryMovie", null, contentValues);
     }
 
-    public void delete(HistoryMovie _historyMovie){
+    public boolean delete(HistoryMovie _historyMovie){
         SQLiteDatabase DB = mySqliteOpenHelper.getReadableDatabase();
         Cursor cursor = DB.rawQuery("SELECT * FROM HistoryMovie", null);
         while(cursor.moveToNext()){
@@ -37,10 +43,17 @@ public class HistoryMovieRepository {
             if(historyMovie.getId() == _historyMovie.getId()){
                 DB = mySqliteOpenHelper.getWritableDatabase();
                 DB.execSQL("DELETE FROM HistoryMovie WHERE Id = " + cursor.getInt(0));
-                break;
+                return true;
             }
         }
         cursor.close();
+        return false;
+    }
+
+    private void deleteMostLater(){
+        SQLiteDatabase DB = mySqliteOpenHelper.getWritableDatabase();
+        DB.execSQL("DELETE FROM HistoryMovie WHERE Id = "
+                + "(SELECT MIN(Id) FROM HistoryMovie)");
     }
 
     public ArrayList<HistoryMovie> get(){
