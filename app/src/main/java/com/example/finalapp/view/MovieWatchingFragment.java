@@ -36,6 +36,8 @@ import com.example.finalapp.adapter.RecycleViewEpisodeListAdapter;
 import com.example.finalapp.databinding.FragmentMovieWatchingBinding;
 import com.example.finalapp.model.Episode;
 import com.example.finalapp.model.Movie;
+import com.example.finalapp.mydialog.MyDialog;
+import com.example.finalapp.mydialog.MyDialogFactory;
 import com.example.finalapp.viewmodel.HomeViewModelFrag;
 import com.example.finalapp.viewmodel.MovieWatchingViewModelFrag;
 import com.google.android.flexbox.FlexDirection;
@@ -54,6 +56,7 @@ public class MovieWatchingFragment extends Fragment {
     private RecycleViewActorListAdapter recycleViewActorListAdapter;
     private RecycleViewEpisodeListAdapter recycleViewEpisodeListAdapter;
     private MyVideoPlayer myVideoPlayer;
+    private View btnAddLaterMovie;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -74,6 +77,7 @@ public class MovieWatchingFragment extends Fragment {
         // find view
         recycleViewActorList = view.findViewById(R.id.recycleViewActorList);
         recycleViewEpisodeList = view.findViewById(R.id.recycleViewEpisodeList);
+        btnAddLaterMovie = view.findViewById(R.id.btnAddLaterMovie);
 
         // init view
         myVideoPlayer = new MyVideoPlayer(context, view.findViewById(R.id.videoView), view.findViewById(R.id.control));
@@ -100,6 +104,13 @@ public class MovieWatchingFragment extends Fragment {
         recycleViewEpisodeListAdapter = new RecycleViewEpisodeListAdapter(context, movie.getListEpisode(), movieWatchingViewModelFrag.getCurrentEpisode(), onEpisodeClick);
         recycleViewEpisodeList.setAdapter(recycleViewEpisodeListAdapter);
         movieWatchingViewModelFrag.addMovieToHistory(movie);
+
+        // event
+        btnAddLaterMovie.setOnClickListener((View v) -> {
+            movieWatchingViewModelFrag.addMovieToLater(movie);
+            MyDialog myDialog = MyDialogFactory.createAddedLaterMovie(context);
+            myDialog.show();
+        });
     }
 
     @Override

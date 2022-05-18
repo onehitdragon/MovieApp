@@ -12,4 +12,13 @@ public class MyDialogFactory {
         myDialog.setContent("Máy chủ không phản hồi");
         return myDialog;
     }
+
+    public static MyDialog createAddedLaterMovie(Context context){
+        MyDialog myDialog = new MyDialog(context);
+        myDialog.setImageSrc(R.drawable.clock);
+        myDialog.setTitle("Thành công");
+        myDialog.setContent("Đã thêm vào danh sách xem sau");
+
+        return myDialog;
+    }
 }

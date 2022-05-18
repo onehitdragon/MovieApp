@@ -148,6 +148,7 @@
                     android:paddingTop="15dp">
                     <!--  item  -->
                     <LinearLayout
+                        android:id="@+id/btnAddLaterMovie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"

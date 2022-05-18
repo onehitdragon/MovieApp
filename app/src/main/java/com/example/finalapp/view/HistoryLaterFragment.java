@@ -11,25 +11,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.example.finalapp.R;
 import com.example.finalapp.adapter.RecycleViewHistoryListAdapter;
+import com.example.finalapp.adapter.RecycleViewLaterMovieListAdapter;
 import com.example.finalapp.localrepository.HistoryMovieRepository;
 import com.example.finalapp.model.HistoryMovie;
 import com.example.finalapp.model.Movie;
 import com.example.finalapp.viewmodel.HistoryViewModelFrag;
 import com.example.finalapp.viewmodel.HomeViewModelFrag;
+import com.example.finalapp.viewmodel.LaterMovieViewModelFrag;
 
 import java.util.ArrayList;
 
-public class HistoryFragment extends Fragment {
+public class HistoryLaterFragment extends Fragment {
     private Context context;
     private RecyclerView recycleViewHistoryList, recycleViewLaterMovieList;
     private HistoryViewModelFrag historyViewModelFrag;
+    private LaterMovieViewModelFrag laterMovieViewModelFrag;
     private RecycleViewHistoryListAdapter recycleViewHistoryListAdapter;
+    private RecycleViewLaterMovieListAdapter recycleViewLaterMovieListAdapter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -66,6 +74,15 @@ public class HistoryFragment extends Fragment {
             recycleViewHistoryListAdapter = new RecycleViewHistoryListAdapter(context, listHistoryMovie, onMovieClick);
             recycleViewHistoryList.setAdapter(recycleViewHistoryListAdapter);
         });
-        historyViewModelFrag.loadHistoryMovie();
+        historyViewModelFrag.loadHistoryMovieList();
+
+        laterMovieViewModelFrag = new ViewModelProvider((MainActivity) context).get(LaterMovieViewModelFrag.class);
+        laterMovieViewModelFrag.getListLaterMovie().observe(getViewLifecycleOwner(), (ArrayList<Movie> listLaterMovie) -> {
+            recycleViewLaterMovieListAdapter = new RecycleViewLaterMovieListAdapter(context, listLaterMovie, onMovieClick, laterMovieViewModelFrag);
+            recycleViewLaterMovieList.setAdapter(recycleViewLaterMovieListAdapter);
+        });
+        laterMovieViewModelFrag.loadLaterMovieList();
+
+        //
     }
 }

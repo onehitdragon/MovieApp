@@ -9,4 +9,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorHint">@color/white_press</item>
     </style>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:popupBackground">#232b2b</item>
+    </style>
 </resources>

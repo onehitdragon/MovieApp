@@ -29,7 +29,7 @@ public class HistoryViewModelFrag extends AndroidViewModel {
         listHistoryMovie = new MutableLiveData<>();
     }
 
-    public void loadHistoryMovie(){
+    public void loadHistoryMovieList(){
         ArrayList<HistoryMovie> listMovieResult = historyMovieRepository.get();
         listHistoryMovie.setValue(listMovieResult);
     }

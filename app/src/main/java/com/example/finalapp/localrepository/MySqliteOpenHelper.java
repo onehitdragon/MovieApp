@@ -27,6 +27,11 @@ public class MySqliteOpenHelper extends SQLiteOpenHelper {
                 + "HistoryMovie TEXT"
                 + ")";
         DB.execSQL(query);
+        query = "CREATE TABLE IF NOT EXISTS LaterMovie("
+                + "Id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "LaterMovie TEXT"
+                + ")";
+        DB.execSQL(query);
     }
 
     @Override

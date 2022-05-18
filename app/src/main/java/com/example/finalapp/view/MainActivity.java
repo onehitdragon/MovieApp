@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.example.finalapp.R;
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         });
         wrapBtnHistory.setOnClickListener((View v) -> {
             wrapBtnOnClickListener.onClick(v);
-            openFragmentExisted(new HistoryFragment(), true, "HistoryFragment");
+            openFragmentExisted(new HistoryLaterFragment(), true, "HistoryFragment");
         });
         wrapBtnDownload.setOnClickListener(wrapBtnOnClickListener);
         wrapBtnUser.setOnClickListener(wrapBtnOnClickListener);
