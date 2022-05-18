@@ -21,6 +21,7 @@
         <entry key="..\:/finalapp/app/src/main/res/drawable/button_design_1_text_red.xml" value="0.143" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/button_design_2.xml" value="0.1535" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/button_design_2_reverse.xml" value="0.144" />
+        <entry key="..\:/finalapp/app/src/main/res/drawable/button_design_3.xml" value="0.1415" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/corner_0.xml" value="0.143" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/corner_1.xml" value="0.143" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/corner_box_0.xml" value="0.145" />
@@ -29,6 +30,9 @@
         <entry key="..\:/finalapp/app/src/main/res/drawable/edit_text_design_0_fail.xml" value="0.161" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/edit_text_design_0_success.xml" value="0.161" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/edittext_seach_design_0.xml" value="0.1535" />
+        <entry key="..\:/finalapp/app/src/main/res/drawable/history_image_design_0.xml" value="0.1415" />
+        <entry key="..\:/finalapp/app/src/main/res/drawable/image_design_0.xml" value="0.1415" />
+        <entry key="..\:/finalapp/app/src/main/res/drawable/image_design_history_0.xml" value="0.1415" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/seekbar_design_0.xml" value="0.144" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/seekbar_design_0_thumb.xml" value="0.144" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/shadow_1.xml" value="0.143" />
@@ -39,6 +43,7 @@
         <entry key="..\:/finalapp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/actor_item.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/episode_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_history.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_intro.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_watching.xml" value="0.25" />
@@ -46,6 +51,7 @@
         <entry key="..\:/finalapp/app/src/main/res/layout/genre_menu_item.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/genre_movie_item.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/genre_of_movie_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/history_movie_item.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/home_fragment.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/message_dialog.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/movie_genre_list.xml" value="0.20416666666666666" />

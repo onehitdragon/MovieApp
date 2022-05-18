@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,6 +18,8 @@ import com.example.finalapp.R;
 public class MainActivity extends AppCompatActivity {
     private RelativeLayout wrapBtnHome, wrapBtnHistory, wrapBtnDownload, wrapBtnUser;
     private RelativeLayout currentWrapBtn;
+    private View.OnClickListener wrapBtnOnClickListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,59 +30,91 @@ public class MainActivity extends AppCompatActivity {
         wrapBtnHistory = findViewById(R.id.wrapBtnHistory);
         wrapBtnDownload = findViewById(R.id.wrapBtnDownload);
         wrapBtnUser = findViewById(R.id.wrapBtnUser);
-        currentWrapBtn = wrapBtnHome;
 
         // init
-        if(savedInstanceState == null){
-            openHomeFragment();
-        }
+        currentWrapBtn = wrapBtnHome;
+        openFragmentExisted(new HomeFragment(), false, "HomeFragment");
 
         // event
-        View.OnClickListener wrapBtnOnClickListener = (View view) -> {
+        wrapBtnOnClickListener = (View view) -> {
+            if(currentWrapBtn == view) return;
             activeWrapBtn((RelativeLayout) view);
+            currentWrapBtn = (RelativeLayout) view;
         };
-        wrapBtnHome.setOnClickListener(wrapBtnOnClickListener);
-        wrapBtnHistory.setOnClickListener(wrapBtnOnClickListener);
+        wrapBtnHome.setOnClickListener((View v) -> {
+            wrapBtnOnClickListener.onClick(v);
+            openFragmentExisted(new HomeFragment(), true, "HomeFragment");
+        });
+        wrapBtnHistory.setOnClickListener((View v) -> {
+            wrapBtnOnClickListener.onClick(v);
+            openFragmentExisted(new HistoryFragment(), true, "HistoryFragment");
+        });
         wrapBtnDownload.setOnClickListener(wrapBtnOnClickListener);
         wrapBtnUser.setOnClickListener(wrapBtnOnClickListener);
     }
 
     private void activeWrapBtn(RelativeLayout wrapBtn){
-        if(currentWrapBtn == wrapBtn) return;
         wrapBtn.setAlpha(1);
         wrapBtn.getChildAt(1).setVisibility(ViewGroup.VISIBLE);
         wrapBtn.setBackgroundResource(R.drawable.shadow);
         currentWrapBtn.setAlpha(0.4f);
         currentWrapBtn.getChildAt(1).setVisibility(ViewGroup.INVISIBLE);
         currentWrapBtn.setBackgroundResource(0);
-        currentWrapBtn = wrapBtn;
     }
 
-    private void openFragment(Fragment fragment, boolean addToBackStack){
+    private void openFragment(Fragment fragment, boolean addToBackStack, String name){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        if(addToBackStack) fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.frameLayout, fragment, name);
+        if(addToBackStack) fragmentTransaction.addToBackStack(name);
         fragmentTransaction.commit();
     }
 
-    public void closeFragment(){
+    private void openFragmentExisted(Fragment fragment, boolean addToBackStack, String name){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack();
+        Fragment fragmentExisted = fragmentManager.findFragmentByTag(name);
+        if(fragmentExisted != null){
+            closeFragment(name);
+        }
+        openFragment(fragment, addToBackStack, name);
     }
 
-    public void openHomeFragment(){
-        HomeFragment homeFragment = new HomeFragment();
-        openFragment(homeFragment, false);
+    public void closeFragment(String name){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     public void openMovieIntroFragment(){
         MovieIntroFragment movieIntroFragment = new MovieIntroFragment();
-        openFragment(movieIntroFragment, true);
+        openFragment(movieIntroFragment, true, "MovieIntroFragment");
     }
 
     public void openMovieWatchingFragment(){
         MovieWatchingFragment movieWatchingFragment = new MovieWatchingFragment();
-        openFragment(movieWatchingFragment, true);
+        openFragment(movieWatchingFragment, true, "MovieWatchingFragment");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if(fragmentManager.getBackStackEntryCount() == 0) {
+            wrapBtnOnClickListener.onClick(wrapBtnHome);
+            return;
+        }
+        FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
+        String name = backStackEntry.getName();
+        Log.e("TAG", "onBackPressed: " + name );
+        if(name == null) return;
+        switch (name){
+            case "HomeFragment" : {
+                wrapBtnOnClickListener.onClick(wrapBtnHome);
+                break;
+            }
+            case "HistoryFragment" : {
+                wrapBtnOnClickListener.onClick(wrapBtnHistory);
+                break;
+            }
+        }
     }
 }

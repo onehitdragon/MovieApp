@@ -99,6 +99,7 @@ public class MovieWatchingFragment extends Fragment {
         };
         recycleViewEpisodeListAdapter = new RecycleViewEpisodeListAdapter(context, movie.getListEpisode(), movieWatchingViewModelFrag.getCurrentEpisode(), onEpisodeClick);
         recycleViewEpisodeList.setAdapter(recycleViewEpisodeListAdapter);
+        movieWatchingViewModelFrag.addMovieToHistory(movie);
     }
 
     @Override

@@ -15,8 +15,6 @@ import android.widget.VideoView;
 
 import com.example.finalapp.R;
 import com.example.finalapp.view.MainActivity;
-import com.google.android.exoplayer2.ui.PlayerControlView;
-
 import java.io.IOException;
 import java.util.logging.Handler;
 

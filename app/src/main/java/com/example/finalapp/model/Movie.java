@@ -136,7 +136,7 @@ public class Movie {
         this.listEpisode = listEpisode;
         this.title = title;
         this.engTitle = engTitle;
-        this.avatarUrl = BaseUrl.URL + avatarUrl;
+        this.avatarUrl = avatarUrl;
         this.releaseYear = releaseYear;
         this.country = country;
         this.rating = rating;
@@ -161,9 +161,10 @@ public class Movie {
             Episode episode = Episode.convertPojo(episodePojo);
             listEpisode.add(episode);
         }
+        moviePojo.avatarUrl = BaseUrl.URL + moviePojo.avatarUrl;
         Movie movie = new Movie(moviePojo.id, director, listActor, listGenre, listEpisode, moviePojo.title,
-                moviePojo.engTitle, moviePojo.avatarUrl, moviePojo.releaseYear, moviePojo.country, moviePojo.rating,
-                moviePojo.content, moviePojo.movieLength);
+        moviePojo.engTitle, moviePojo.avatarUrl, moviePojo.releaseYear, moviePojo.country, moviePojo.rating,
+        moviePojo.content, moviePojo.movieLength);
 
         return movie;
     }

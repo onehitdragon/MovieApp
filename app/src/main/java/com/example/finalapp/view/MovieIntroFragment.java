@@ -75,7 +75,7 @@ public class MovieIntroFragment extends Fragment {
 
         // event
         btnBack.setOnClickListener((View v) -> {
-            ((MainActivity) context).closeFragment();
+            ((MainActivity) context).closeFragment("MovieIntroFragment");
         });
         btnWatchMovie.setOnClickListener((View v) -> {
             ((MainActivity)context).openMovieWatchingFragment();

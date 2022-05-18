@@ -34,11 +34,11 @@ public class Actor {
 
     public Actor(int id, String avatarUrl, String fullName) {
         this.id = id;
-        this.avatarUrl = BaseUrl.URL + avatarUrl;
+        this.avatarUrl = avatarUrl;
         this.fullName = fullName;
     }
 
     public static Actor convertPojo(ActorPojo actorPojo){
-        return new Actor(actorPojo.id, actorPojo.avatarUrl, actorPojo.fullName);
+        return new Actor(actorPojo.id, BaseUrl.URL + actorPojo.avatarUrl, actorPojo.fullName);
     }
 }

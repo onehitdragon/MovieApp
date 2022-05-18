@@ -140,6 +140,66 @@
                     android:text="@{movie.engTitle}"
                     style="@style/text_style_16"
                     android:textColor="@color/white_press"/>
+                <!--  tools  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="15dp">
+                    <!--  item  -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:background="@drawable/image_design_history_0"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:text="Xem sau"
+                            style="@style/text_style_16"
+                            android:textColor="@drawable/button_design_0_text"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:background="@drawable/image_design_download_0"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:text="Tải xuống"
+                            style="@style/text_style_16"
+                            android:textColor="@drawable/button_design_0_text"/>
+                    </LinearLayout>
+                </LinearLayout>
                 <!--  actors  -->
                 <TextView
                     android:layout_width="match_parent"
