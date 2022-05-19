@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
 import com.example.finalapp.model.Movie;
+import com.example.finalapp.mymenu.MyMenu;
 import com.example.finalapp.view.HomeFragment;
 
 import java.util.ArrayList;
@@ -68,6 +70,13 @@ public class RecycleViewNewestMovieListAdapter extends RecyclerView.Adapter<Recy
             textViewRating.setText(String.valueOf(movie.getRating()));
             itemView.setOnClickListener((View view) -> {
                 onMovieClick.click(movie);
+            });
+            itemView.setOnLongClickListener((View v) -> {
+                MyMenu myMenu = new MyMenu(context);
+                PopupMenu popupMenu = myMenu.createMovieMenu(itemView, movie, onMovieClick);
+                popupMenu.show();
+
+                return true;
             });
         }
     }

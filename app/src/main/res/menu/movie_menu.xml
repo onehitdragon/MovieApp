@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/watchingMovie"
+        android:title="Xem ngay"/>
+    <item android:id="@+id/addToLater"
+        android:title="Thêm xem sau"/>
+    <item android:id="@+id/downloadMovie"
+        android:title="Tải xuống"/>
+</menu>

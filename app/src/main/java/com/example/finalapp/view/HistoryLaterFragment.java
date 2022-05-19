@@ -78,7 +78,7 @@ public class HistoryLaterFragment extends Fragment {
 
         laterMovieViewModelFrag = new ViewModelProvider((MainActivity) context).get(LaterMovieViewModelFrag.class);
         laterMovieViewModelFrag.getListLaterMovie().observe(getViewLifecycleOwner(), (ArrayList<Movie> listLaterMovie) -> {
-            recycleViewLaterMovieListAdapter = new RecycleViewLaterMovieListAdapter(context, listLaterMovie, onMovieClick, laterMovieViewModelFrag);
+            recycleViewLaterMovieListAdapter = new RecycleViewLaterMovieListAdapter(context, listLaterMovie, onMovieClick);
             recycleViewLaterMovieList.setAdapter(recycleViewLaterMovieListAdapter);
         });
         laterMovieViewModelFrag.loadLaterMovieList();

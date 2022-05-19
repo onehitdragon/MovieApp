@@ -9,7 +9,16 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorHint">@color/white_press</item>
     </style>
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:popupBackground">#232b2b</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle</item>
+    </style>
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@drawable/corner_box_2</item>
+        <item name="android:dropDownVerticalOffset">0dp</item>
+    </style>
+    <style name="itemTextStyle" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16dp</item>
     </style>
 </resources>

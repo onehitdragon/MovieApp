@@ -1,6 +1,7 @@
 package com.example.finalapp.adapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
 import com.example.finalapp.model.HistoryMovie;
 import com.example.finalapp.model.Movie;
+import com.example.finalapp.mymenu.MyMenu;
 import com.example.finalapp.viewmodel.LaterMovieViewModelFrag;
 
 import java.util.ArrayList;
@@ -24,13 +26,11 @@ public class RecycleViewLaterMovieListAdapter extends RecyclerView.Adapter<Recyc
     private Context context;
     private ArrayList<Movie> listMovie;
     private Movie.OnMovieClick onMovieClick;
-    private LaterMovieViewModelFrag laterMovieViewModelFrag;
 
-    public RecycleViewLaterMovieListAdapter(Context context, ArrayList<Movie> listMovie, Movie.OnMovieClick onMovieClick, LaterMovieViewModelFrag laterMovieViewModelFrag) {
+    public RecycleViewLaterMovieListAdapter(Context context, ArrayList<Movie> listMovie, Movie.OnMovieClick onMovieClick) {
         this.context = context;
         this.listMovie = listMovie;
         this.onMovieClick = onMovieClick;
-        this.laterMovieViewModelFrag = laterMovieViewModelFrag;
     }
 
     @NonNull
@@ -72,16 +72,10 @@ public class RecycleViewLaterMovieListAdapter extends RecyclerView.Adapter<Recyc
                 onMovieClick.click(movie);
             });
             itemView.setOnLongClickListener((View v) -> {
-                PopupMenu popupMenu = new PopupMenu(context, itemView);
-                popupMenu.inflate(R.menu.later_movie_menu);
-                popupMenu.setOnMenuItemClickListener((MenuItem item) -> {
-                    int id = item.getItemId();
-                    if(id == R.id.deleteFromLater){
-                        laterMovieViewModelFrag.deleteMovieFromLater(movie);
-                    }
-                    return false;
-                });
+                MyMenu myMenu = new MyMenu(context);
+                PopupMenu popupMenu = myMenu.createLaterMovieMenu(itemView, movie);
                 popupMenu.show();
+
                 return true;
             });
         }
