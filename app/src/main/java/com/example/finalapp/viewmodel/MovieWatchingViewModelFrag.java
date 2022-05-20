@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 
+import com.example.finalapp.localrepository.DownloadMovieRepository;
 import com.example.finalapp.localrepository.HistoryMovieRepository;
 import com.example.finalapp.localrepository.LaterMovieRepository;
 import com.example.finalapp.model.Episode;
@@ -19,6 +20,7 @@ public class MovieWatchingViewModelFrag extends AndroidViewModel {
     private Episode currentEpisode;
     private HistoryMovieRepository historyMovieRepository;
     private LaterMovieRepository laterMovieRepository;
+    private DownloadMovieRepository downloadMovieRepository;
 
     public Episode getCurrentEpisode() {
         return currentEpisode;
@@ -32,6 +34,7 @@ public class MovieWatchingViewModelFrag extends AndroidViewModel {
         super(application);
         historyMovieRepository = new HistoryMovieRepository(application);
         laterMovieRepository = new LaterMovieRepository(application);
+        downloadMovieRepository = new DownloadMovieRepository(application);
     }
 
     public void addMovieToHistory(Movie movie){
@@ -42,5 +45,9 @@ public class MovieWatchingViewModelFrag extends AndroidViewModel {
 
     public void addMovieToLater(Movie movie){
         laterMovieRepository.insert(movie);
+    }
+
+    public boolean addMovieToDownload(Movie movie){
+        return downloadMovieRepository.insert(movie, currentEpisode);
     }
 }

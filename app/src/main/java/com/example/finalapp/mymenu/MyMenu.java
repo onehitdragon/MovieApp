@@ -54,9 +54,6 @@ public class MyMenu {
                 myDialog.show();
                 return true;
             }
-            if(id == R.id.downloadMovie){
-                return true;
-            }
 
             return false;
         });

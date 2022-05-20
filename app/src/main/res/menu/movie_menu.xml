@@ -4,6 +4,4 @@
         android:title="Xem ngay"/>
     <item android:id="@+id/addToLater"
         android:title="Thêm xem sau"/>
-    <item android:id="@+id/downloadMovie"
-        android:title="Tải xuống"/>
 </menu>

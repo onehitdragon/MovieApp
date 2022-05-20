@@ -1,6 +1,9 @@
 package com.example.finalapp.view;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -16,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.IBinder;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +42,7 @@ import com.example.finalapp.model.Episode;
 import com.example.finalapp.model.Movie;
 import com.example.finalapp.mydialog.MyDialog;
 import com.example.finalapp.mydialog.MyDialogFactory;
+import com.example.finalapp.service.MovieDownloadService;
 import com.example.finalapp.viewmodel.HomeViewModelFrag;
 import com.example.finalapp.viewmodel.MovieWatchingViewModelFrag;
 import com.google.android.flexbox.FlexDirection;
@@ -56,7 +61,7 @@ public class MovieWatchingFragment extends Fragment {
     private RecycleViewActorListAdapter recycleViewActorListAdapter;
     private RecycleViewEpisodeListAdapter recycleViewEpisodeListAdapter;
     private MyVideoPlayer myVideoPlayer;
-    private View btnAddLaterMovie;
+    private View btnAddLaterMovie, btnDownloadMovie;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -78,6 +83,7 @@ public class MovieWatchingFragment extends Fragment {
         recycleViewActorList = view.findViewById(R.id.recycleViewActorList);
         recycleViewEpisodeList = view.findViewById(R.id.recycleViewEpisodeList);
         btnAddLaterMovie = view.findViewById(R.id.btnAddLaterMovie);
+        btnDownloadMovie = view.findViewById(R.id.btnDownloadMovie);
 
         // init view
         myVideoPlayer = new MyVideoPlayer(context, view.findViewById(R.id.videoView), view.findViewById(R.id.control));
@@ -109,6 +115,34 @@ public class MovieWatchingFragment extends Fragment {
         btnAddLaterMovie.setOnClickListener((View v) -> {
             movieWatchingViewModelFrag.addMovieToLater(movie);
             MyDialog myDialog = MyDialogFactory.createAddedLaterMovie(context);
+            myDialog.show();
+        });
+        btnDownloadMovie.setOnClickListener((View v) -> {
+            MyDialog myDialog;
+            if(movieWatchingViewModelFrag.addMovieToDownload(movie)){
+                myDialog = MyDialogFactory.createAddedDownload(context);
+                Intent intent = new Intent(context, MovieDownloadService.class);
+                intent.putExtra("movieUrl", "https://pouch.jumpshare.com/preview/drM4im3xxR1gMoXUX1AadF-Owb0FvIlxHDUSO_PFadnP6nzLUlN_VVvDz9gIhTJoPfyRWQpc1GqtO8as-dNEhU-4cR7LGgEXU1e62FZ9N3403FfWQWXBRSa4d0QPPgvT.mp4");
+                context.startService(intent);
+                context.bindService(intent, new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                        Log.e("TAG", "onServiceConnected: ");
+                        MovieDownloadService movieDownloadService = ((MovieDownloadService.MyBinder)iBinder).getService();
+                        movieDownloadService.getProgress().observe(getViewLifecycleOwner(), (Integer progress) -> {
+                            Log.e("TAG", "onServiceConnected: " + progress);
+                        });
+                    }
+
+                    @Override
+                    public void onServiceDisconnected(ComponentName componentName) {
+                        Log.e("TAG", "onServiceDisconnected: ");
+                    }
+                }, Context.BIND_AUTO_CREATE);
+            }
+            else{
+                myDialog = MyDialogFactory.createAddedDownloadFail(context);
+            }
             myDialog.show();
         });
     }

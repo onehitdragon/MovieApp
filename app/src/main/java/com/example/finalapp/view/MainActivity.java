@@ -47,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
             wrapBtnOnClickListener.onClick(v);
             openFragmentExisted(new HistoryLaterFragment(), true, "HistoryFragment");
         });
-        wrapBtnDownload.setOnClickListener(wrapBtnOnClickListener);
+        wrapBtnDownload.setOnClickListener((View v) -> {
+            wrapBtnOnClickListener.onClick(v);
+            openFragmentExisted(new DownloadFragment(), true, "DownloadFragment");
+        });
         wrapBtnUser.setOnClickListener(wrapBtnOnClickListener);
     }
 

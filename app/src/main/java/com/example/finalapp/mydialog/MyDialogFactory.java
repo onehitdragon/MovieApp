@@ -21,4 +21,22 @@ public class MyDialogFactory {
 
         return myDialog;
     }
+
+    public static MyDialog createAddedDownload(Context context){
+        MyDialog myDialog = new MyDialog(context);
+        myDialog.setImageSrc(R.drawable.download);
+        myDialog.setTitle("Thành công");
+        myDialog.setContent("Đã thêm vào danh sách tải xuống");
+
+        return myDialog;
+    }
+
+    public static MyDialog createAddedDownloadFail(Context context){
+        MyDialog myDialog = new MyDialog(context);
+        myDialog.setImageSrc(R.drawable.download_fail);
+        myDialog.setTitle("Thất bại");
+        myDialog.setContent("Tập này đã được tải xuống");
+
+        return myDialog;
+    }
 }

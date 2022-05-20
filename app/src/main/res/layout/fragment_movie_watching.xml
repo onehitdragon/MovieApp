@@ -175,6 +175,7 @@
                             android:textColor="@drawable/button_design_0_text"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/btnDownloadMovie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
