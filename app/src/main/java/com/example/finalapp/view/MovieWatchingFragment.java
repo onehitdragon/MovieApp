@@ -39,6 +39,7 @@ import com.example.finalapp.adapter.RecycleViewActorListAdapter;
 import com.example.finalapp.adapter.RecycleViewEpisodeListAdapter;
 import com.example.finalapp.databinding.FragmentMovieWatchingBinding;
 import com.example.finalapp.model.Episode;
+import com.example.finalapp.model.InfoDownloadMovie;
 import com.example.finalapp.model.Movie;
 import com.example.finalapp.mydialog.MyDialog;
 import com.example.finalapp.mydialog.MyDialogFactory;
@@ -121,17 +122,20 @@ public class MovieWatchingFragment extends Fragment {
             MyDialog myDialog;
             if(movieWatchingViewModelFrag.addMovieToDownload(movie)){
                 myDialog = MyDialogFactory.createAddedDownload(context);
+
                 Intent intent = new Intent(context, MovieDownloadService.class);
-                intent.putExtra("movieUrl", "https://pouch.jumpshare.com/preview/drM4im3xxR1gMoXUX1AadF-Owb0FvIlxHDUSO_PFadnP6nzLUlN_VVvDz9gIhTJoPfyRWQpc1GqtO8as-dNEhU-4cR7LGgEXU1e62FZ9N3403FfWQWXBRSa4d0QPPgvT.mp4");
                 context.startService(intent);
                 context.bindService(intent, new ServiceConnection() {
                     @Override
                     public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                         Log.e("TAG", "onServiceConnected: ");
                         MovieDownloadService movieDownloadService = ((MovieDownloadService.MyBinder)iBinder).getService();
-                        movieDownloadService.getProgress().observe(getViewLifecycleOwner(), (Integer progress) -> {
-                            Log.e("TAG", "onServiceConnected: " + progress);
-                        });
+                        InfoDownloadMovie infoDownloadMovie = new InfoDownloadMovie(
+                                movie,
+                                movieWatchingViewModelFrag.getCurrentEpisode()
+                        );
+                        movieDownloadService.addToDownload(infoDownloadMovie);
+                        context.unbindService(this);
                     }
 
                     @Override

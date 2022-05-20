@@ -34,8 +34,7 @@ public class MySqliteOpenHelper extends SQLiteOpenHelper {
         DB.execSQL(query);
         query = "CREATE TABLE IF NOT EXISTS DownloadMovie("
                 + "Id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "DownloadMovie TEXT,"
-                + "Episode TEXT"
+                + "InfoDownloadMovie TEXT"
                 + ")";
         DB.execSQL(query);
     }

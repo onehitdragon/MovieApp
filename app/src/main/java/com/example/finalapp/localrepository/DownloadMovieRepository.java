@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.finalapp.model.Episode;
+import com.example.finalapp.model.InfoDownloadMovie;
 import com.example.finalapp.model.Movie;
 import com.google.gson.Gson;
 
@@ -20,26 +21,23 @@ public class DownloadMovieRepository {
         gson = new Gson();
     }
 
-    public boolean insert(Movie movie, Episode episode){
+    public boolean insert(InfoDownloadMovie infoDownloadMovie){
         SQLiteDatabase DB = mySqliteOpenHelper.getWritableDatabase();
-        if(movieAndEpisodeIsExist(movie, episode)) return false;
+        if(infoDownloadMovieIsExist(infoDownloadMovie)) return false;
         ContentValues contentValues = new ContentValues();
-        contentValues.put("DownloadMovie", gson.toJson(movie));
-        contentValues.put("Episode", gson.toJson(episode));
+        contentValues.put("InfoDownloadMovie", gson.toJson(infoDownloadMovie));
         DB.insert("DownloadMovie", null, contentValues);
 
         return true;
     }
 
-    private boolean movieAndEpisodeIsExist(Movie movie, Episode episode){
+    private boolean infoDownloadMovieIsExist(InfoDownloadMovie _infoDownloadMovie){
         SQLiteDatabase DB = mySqliteOpenHelper.getReadableDatabase();
         Cursor cursor = DB.rawQuery("SELECT * FROM DownloadMovie", null);
         while(cursor.moveToNext()){
             String json = cursor.getString(1);
-            Movie downloadMovie = gson.fromJson(json, Movie.class);
-            json = cursor.getString(2);
-            Episode episodeMovie = gson.fromJson(json, Episode.class);
-            if(downloadMovie.getId() == movie.getId() && episodeMovie.getNumber() == episode.getNumber()){
+            InfoDownloadMovie infoDownloadMovie = gson.fromJson(json, InfoDownloadMovie.class);
+            if(infoDownloadMovie.getMovie().getId() == _infoDownloadMovie.getMovie().getId() && infoDownloadMovie.getEpisode().getNumber() == _infoDownloadMovie.getEpisode().getNumber()){
                 cursor.close();
                 return true;
             }
@@ -48,17 +46,17 @@ public class DownloadMovieRepository {
         return false;
     }
 
-    public ArrayList<Movie> get(){
-        ArrayList<Movie> listHistoryMovie = new ArrayList<>();
+    public ArrayList<InfoDownloadMovie> get(){
+        ArrayList<InfoDownloadMovie> listDownloadMovie = new ArrayList<>();
         SQLiteDatabase DB = mySqliteOpenHelper.getReadableDatabase();
         Cursor cursor = DB.rawQuery("SELECT * FROM DownloadMovie ORDER BY Id DESC", null);
         while(cursor.moveToNext()){
             String json = cursor.getString(1);
-            Movie movie = gson.fromJson(json, Movie.class);
-            listHistoryMovie.add(movie);
+            InfoDownloadMovie infoDownloadMovie = gson.fromJson(json, InfoDownloadMovie.class);
+            listDownloadMovie.add(infoDownloadMovie);
         }
         cursor.close();
 
-        return listHistoryMovie;
+        return listDownloadMovie;
     }
 }

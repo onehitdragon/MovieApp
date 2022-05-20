@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
@@ -16,8 +17,12 @@ import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.finalapp.R;
+import com.example.finalapp.model.Episode;
+import com.example.finalapp.model.InfoDownloadMovie;
+import com.example.finalapp.model.Movie;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,23 +30,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channel;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class MovieDownloadService extends Service {
-    private MutableLiveData<Integer> progress;
-
-    public MutableLiveData<Integer> getProgress() {
-        return progress;
-    }
-
-    public void setProgress(MutableLiveData<Integer> progress) {
-        this.progress = progress;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        progress = new MutableLiveData<>();
-    }
+    private Queue<InfoDownloadMovie> listMovie;
+    private boolean isStartDownload;
 
     @Nullable
     @Override
@@ -56,8 +52,102 @@ public class MovieDownloadService extends Service {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        listMovie = new LinkedList<>();
+        isStartDownload = false;
+    }
+
+    public void addToDownload(InfoDownloadMovie infoDownloadMovie){
+        listMovie.add(infoDownloadMovie);
+        updateNotification();
+        if(!isStartDownload){
+            startDownload();
+            startForeground(1, createNotification());
+            isStartDownload = true;
+        }
+    }
+
+    private void startDownload(){
+        new Thread(() -> {
+            while (listMovie.size() != 0){
+                InfoDownloadMovie infoDownloadMovie = listMovie.peek();
+                if(infoDownloadMovie == null) break;
+
+                try {
+                    URL url = new URL(infoDownloadMovie.getEpisode().getSourceUrl());
+                    URLConnection urlConnection = url.openConnection();
+                    urlConnection.connect();
+
+                    int total = urlConnection.getContentLength();
+                    Log.e("TAG", "lengthOfFile: " + total);
+                    InputStream inputStream = new BufferedInputStream(url.openStream(), 8192);
+                    File[] files = this.getExternalCacheDirs();
+                    File internalStorage = files[0];
+                    File sdCard = files[1];
+                    File destination = sdCard != null ? sdCard : internalStorage;
+                    String[] extension = url.getPath().split("\\.");
+                    String fileName = infoDownloadMovie.getMovie().getId() + "-" + infoDownloadMovie.getEpisode().getNumber() + "." + extension[extension.length - 1];
+
+                    OutputStream outputStream = new FileOutputStream(destination.getPath() + "/" + fileName);
+                    byte[] data = new byte[1024];
+                    int currentTotal = 0;
+                    int count = 0;
+                    while (true){
+                        // read data
+                        count = inputStream.read(data);
+                        // write data
+                        if(count != -1){
+                            outputStream.write(data, 0, count);
+                            currentTotal += count;
+                            int percent = (int)((currentTotal * 1.0 / total) * 100);
+                            infoDownloadMovie.getProgress().postValue(percent);
+                        }
+                        else{
+                            break;
+                        }
+                    }
+
+                    // close
+                    inputStream.close();
+                    outputStream.flush();
+                    outputStream.close();
+
+                    //
+                    Log.e("TAG", "comleteDownload: ");
+                    listMovie.poll();
+                    updateNotification();
+                } catch (Exception e) {
+                    Log.e("Error: ", e.getMessage());
+                }
+            }
+            Log.e("TAG", "stopSelf: ");
+            stopForeground(true);
+            stopSelf();
+        }).start();
+    }
+
+    public InfoDownloadMovie getInfoDownloadMovie(InfoDownloadMovie _infoDownloadMovie){
+        for (InfoDownloadMovie infoDownloadMovie : listMovie) {
+            if(infoDownloadMovie.getMovie().getId() == _infoDownloadMovie.getMovie().getId() && infoDownloadMovie.getEpisode().getNumber() == _infoDownloadMovie.getEpisode().getNumber()){
+                return infoDownloadMovie;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // notification
+        return START_REDELIVER_INTENT;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("TAG", "onDestroy Download Service: ");
+    }
+
+    private Notification createNotification(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("channelId0", "channelName0", NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("this is my channel");
@@ -67,55 +157,14 @@ public class MovieDownloadService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channelId0");
         builder.setSmallIcon(R.drawable.camera_icon);
         builder.setContentTitle("this is my service");
-        builder.setContentText("this is my service");
+        builder.setContentText("Đang tải xuống" + listMovie.size());
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        Notification notification = builder.build();
-        startForeground(1, notification);
 
-        //
-        new Thread(() -> {
-            try {
-                URL url = new URL(intent.getStringExtra("movieUrl"));
-                URLConnection urlConnection = url.openConnection();
-                urlConnection.connect();
-
-                int total = urlConnection.getContentLength();
-                Log.e("TAG", "lengthOfFile: " + total);
-                InputStream inputStream = new BufferedInputStream(url.openStream(), 8192);
-                OutputStream outputStream = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + "/vinh.mp4");
-                byte[] data = new byte[1024];
-                int currentTotal = 0;
-                int count = 0;
-                while (true){
-                    // read data
-                    count = inputStream.read(data);
-                    // write data
-                    if(count != -1){
-                        outputStream.write(data, 0, count);
-                        currentTotal += count;
-                        int percent = (int)((currentTotal * 1.0 / total) * 100);
-                        progress.postValue(percent);
-                    }
-                    else{
-                        break;
-                    }
-                }
-
-                // close
-                inputStream.close();
-                outputStream.flush();
-                outputStream.close();
-            } catch (Exception e) {
-                Log.e("Error: ", e.getMessage());
-            }
-        }).start();
-
-        return START_REDELIVER_INTENT;
+        return builder.build();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.e("TAG", "onDestroy: ");
+    private void updateNotification(){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, createNotification());
     }
 }

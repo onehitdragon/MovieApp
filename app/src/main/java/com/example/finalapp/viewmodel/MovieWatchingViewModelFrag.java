@@ -10,6 +10,7 @@ import com.example.finalapp.localrepository.HistoryMovieRepository;
 import com.example.finalapp.localrepository.LaterMovieRepository;
 import com.example.finalapp.model.Episode;
 import com.example.finalapp.model.HistoryMovie;
+import com.example.finalapp.model.InfoDownloadMovie;
 import com.example.finalapp.model.Movie;
 
 import java.text.SimpleDateFormat;
@@ -48,6 +49,7 @@ public class MovieWatchingViewModelFrag extends AndroidViewModel {
     }
 
     public boolean addMovieToDownload(Movie movie){
-        return downloadMovieRepository.insert(movie, currentEpisode);
+        InfoDownloadMovie infoDownloadMovie = new InfoDownloadMovie(movie, currentEpisode);
+        return downloadMovieRepository.insert(infoDownloadMovie);
     }
 }
