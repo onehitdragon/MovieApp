@@ -62,6 +62,8 @@
         <entry key="..\:/finalapp/app/src/main/res/layout/movie_genre_list.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/newest_movie_item.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/search_result_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/finalapp/app/src/main/res/menu/download_movie_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/finalapp/app/src/main/res/menu/downloaded_movie_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/menu/later_movie_menu.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/menu/movie_menu.xml" value="0.20416666666666666" />
       </map>

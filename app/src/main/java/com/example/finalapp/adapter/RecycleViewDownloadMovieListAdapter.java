@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
 import com.example.finalapp.model.InfoDownloadMovie;
 import com.example.finalapp.model.Movie;
+import com.example.finalapp.mymenu.MyMenu;
 import com.example.finalapp.service.MovieDownloadService;
 import com.example.finalapp.view.MainActivity;
 
@@ -90,17 +92,16 @@ public class RecycleViewDownloadMovieListAdapter extends RecyclerView.Adapter<Re
                     InfoDownloadMovie infoDownloadMovieResult = movieDownloadService.getInfoDownloadMovie(infoDownloadMovie);
                     if(infoDownloadMovieResult == null){
                         // complete
-                        completeDownload();
+                        complete(infoDownloadMovie);
                     }
                     else{
                         // not complete
-                        presentDownloadArea.setVisibility(View.VISIBLE);
-                        presentDownloadedArea.setVisibility(View.GONE);
+                        inComplete(infoDownloadMovie);
                         infoDownloadMovieResult.getProgress().observe(lifecycleOwner, (Integer progress) -> {
                             String percent = progress + "%";
                             textViewPercent.setText(percent);
                             if(progress == 100){
-                                completeDownload();
+                                complete(infoDownloadMovie);
                             }
                         });
                     }
@@ -117,10 +118,31 @@ public class RecycleViewDownloadMovieListAdapter extends RecyclerView.Adapter<Re
             });
         }
 
-        private void completeDownload(){
+        private void complete(InfoDownloadMovie infoDownloadMovie){
             presentDownloadArea.setVisibility(View.GONE);
             presentDownloadedArea.setVisibility(View.VISIBLE);
             textViewGenreName.setText("Đã tải");
+
+            // show menu
+            itemView.setOnLongClickListener((View view) -> {
+                MyMenu myMenu = new MyMenu(context);
+                PopupMenu popupMenu = myMenu.createDownloadedMovieMenu(itemView, infoDownloadMovie);
+                popupMenu.show();
+                return true;
+            });
+        }
+
+        private void inComplete(InfoDownloadMovie infoDownloadMovie){
+            presentDownloadArea.setVisibility(View.VISIBLE);
+            presentDownloadedArea.setVisibility(View.GONE);
+
+            // show menu
+            itemView.setOnLongClickListener((View view) -> {
+                MyMenu myMenu = new MyMenu(context);
+                PopupMenu popupMenu = myMenu.createDownloadMovieMenu(itemView, infoDownloadMovie);
+                popupMenu.show();
+                return true;
+            });
         }
     }
 }

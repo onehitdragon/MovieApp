@@ -35,4 +35,9 @@ public class DownloadViewModelFrag extends AndroidViewModel {
         ArrayList<InfoDownloadMovie> listMovieResult = downloadMovieRepository.get();
         listDownloadMovie.setValue(listMovieResult);
     }
+
+    public void deleteFromDownload(InfoDownloadMovie infoDownloadMovie){
+        downloadMovieRepository.delete(infoDownloadMovie);
+        loadListDownloadMovie();
+    }
 }

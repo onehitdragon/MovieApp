@@ -59,4 +59,19 @@ public class DownloadMovieRepository {
 
         return listDownloadMovie;
     }
+
+    public void delete(InfoDownloadMovie _infoDownloadMovie){
+        SQLiteDatabase DB = mySqliteOpenHelper.getReadableDatabase();
+        Cursor cursor = DB.rawQuery("SELECT * FROM DownloadMovie", null);
+        while (cursor.moveToNext()){
+            String json = cursor.getString(1);
+            InfoDownloadMovie infoDownloadMovie = gson.fromJson(json, InfoDownloadMovie.class);
+            if(infoDownloadMovie.getMovie().getId() == _infoDownloadMovie.getMovie().getId() && infoDownloadMovie.getEpisode().getNumber() == _infoDownloadMovie.getEpisode().getNumber()){
+                DB = mySqliteOpenHelper.getWritableDatabase();
+                DB.execSQL("DELETE FROM DownloadMovie WHERE Id = " + cursor.getInt(0));
+                break;
+            }
+        }
+        cursor.close();
+    }
 }

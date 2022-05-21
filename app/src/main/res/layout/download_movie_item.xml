@@ -48,7 +48,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                             android:id="@+id/textViewPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5%"
+                            android:text="0%"
                             style="@style/text_style_16"
                             android:textSize="15sp"
                             android:textColor="@color/navy"/>

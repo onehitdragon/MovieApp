@@ -38,6 +38,7 @@ import java.util.Queue;
 public class MovieDownloadService extends Service {
     private Queue<InfoDownloadMovie> listMovie;
     private boolean isStartDownload;
+    private InfoDownloadMovie infoDownloadMovieNeedRemove;
 
     @Nullable
     @Override
@@ -68,6 +69,16 @@ public class MovieDownloadService extends Service {
         }
     }
 
+    public void removeFromDownload(InfoDownloadMovie _infoDownloadMovie){
+        for (InfoDownloadMovie infoDownloadMovie : listMovie) {
+            if(infoDownloadMovie.getMovie().getId() == _infoDownloadMovie.getMovie().getId() && infoDownloadMovie.getEpisode().getNumber() == _infoDownloadMovie.getEpisode().getNumber()){
+                listMovie.remove(infoDownloadMovie);
+                updateNotification();
+                break;
+            }
+        }
+    }
+
     private void startDownload(){
         new Thread(() -> {
             while (listMovie.size() != 0){
@@ -82,14 +93,9 @@ public class MovieDownloadService extends Service {
                     int total = urlConnection.getContentLength();
                     Log.e("TAG", "lengthOfFile: " + total);
                     InputStream inputStream = new BufferedInputStream(url.openStream(), 8192);
-                    File[] files = this.getExternalCacheDirs();
-                    File internalStorage = files[0];
-                    File sdCard = files[1];
-                    File destination = sdCard != null ? sdCard : internalStorage;
-                    String[] extension = url.getPath().split("\\.");
-                    String fileName = infoDownloadMovie.getMovie().getId() + "-" + infoDownloadMovie.getEpisode().getNumber() + "." + extension[extension.length - 1];
+                    File destinationPath = infoDownloadMovie.getDestinationPath(this);
 
-                    OutputStream outputStream = new FileOutputStream(destination.getPath() + "/" + fileName);
+                    OutputStream outputStream = new FileOutputStream(destinationPath);
                     byte[] data = new byte[1024];
                     int currentTotal = 0;
                     int count = 0;
@@ -106,6 +112,10 @@ public class MovieDownloadService extends Service {
                         else{
                             break;
                         }
+                        // detect movie be remove
+                        if(getInfoDownloadMovie(infoDownloadMovie) == null){
+                            break;
+                        }
                     }
 
                     // close
@@ -113,8 +123,12 @@ public class MovieDownloadService extends Service {
                     outputStream.flush();
                     outputStream.close();
 
-                    //
-                    Log.e("TAG", "comleteDownload: ");
+                    // detect movie be remove
+                    if(getInfoDownloadMovie(infoDownloadMovie) == null){
+                        Log.e("TAG", "cancerDownload: ");
+                        destinationPath.delete();
+                        continue;
+                    }
                     listMovie.poll();
                     updateNotification();
                 } catch (Exception e) {
@@ -155,9 +169,9 @@ public class MovieDownloadService extends Service {
             notificationManager.createNotificationChannel(channel);
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channelId0");
-        builder.setSmallIcon(R.drawable.camera_icon);
-        builder.setContentTitle("this is my service");
-        builder.setContentText("Đang tải xuống" + listMovie.size());
+        builder.setSmallIcon(R.drawable.download);
+        builder.setContentTitle("Phim đang được tải");
+        builder.setContentText("Số lượng phim đang tải " + listMovie.size());
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         return builder.build();
