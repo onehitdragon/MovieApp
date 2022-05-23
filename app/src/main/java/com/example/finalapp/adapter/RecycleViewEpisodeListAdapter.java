@@ -61,7 +61,7 @@ public class RecycleViewEpisodeListAdapter extends RecyclerView.Adapter<RecycleV
         }
 
         public void bind(Episode episode){
-            if(episode == currentEpisode){
+            if(episode.getNumber() == currentEpisode.getNumber()){
                 currentEpisodeView = btnChoiceEpisode;
                 currentEpisodeView.setBackgroundColor(Color.parseColor("#FFC107"));
             }

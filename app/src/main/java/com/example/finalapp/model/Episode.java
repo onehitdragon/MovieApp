@@ -3,9 +3,12 @@ package com.example.finalapp.model;
 import com.example.finalapp.remoterepository.BaseUrl;
 import com.example.finalapp.remoterepository.EpisodePojo;
 
+import java.io.File;
+
 public class Episode {
     private int number;
     private String sourceUrl;
+    private File destinationPathSaved;
 
     public int getNumber() {
         return number;
@@ -21,6 +24,14 @@ public class Episode {
 
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
+    }
+
+    public File getDestinationPathSaved() {
+        return destinationPathSaved;
+    }
+
+    public void setDestinationPathSaved(File destinationPathSaved) {
+        this.destinationPathSaved = destinationPathSaved;
     }
 
     public Episode(int number, String sourceUrl) {

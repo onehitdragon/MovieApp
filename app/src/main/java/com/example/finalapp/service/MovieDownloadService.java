@@ -38,7 +38,6 @@ import java.util.Queue;
 public class MovieDownloadService extends Service {
     private Queue<InfoDownloadMovie> listMovie;
     private boolean isStartDownload;
-    private InfoDownloadMovie infoDownloadMovieNeedRemove;
 
     @Nullable
     @Override

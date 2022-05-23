@@ -52,4 +52,8 @@ public class InfoDownloadMovie{
 
         return new File(outputPath);
     }
+
+    public interface OnDownloadMovieClick{
+        public void click(InfoDownloadMovie infoDownloadMovie);
+    }
 }

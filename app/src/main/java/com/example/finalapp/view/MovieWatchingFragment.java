@@ -99,14 +99,14 @@ public class MovieWatchingFragment extends Fragment {
         binding.setMovie(movie);
         recycleViewActorListAdapter = new RecycleViewActorListAdapter(context, movie.getListActor());
         recycleViewActorList.setAdapter(recycleViewActorListAdapter);
-        movieWatchingViewModelFrag = new ViewModelProvider(this).get(MovieWatchingViewModelFrag.class);
+        movieWatchingViewModelFrag = new ViewModelProvider((MainActivity) context).get(MovieWatchingViewModelFrag.class);
         if(movieWatchingViewModelFrag.getCurrentEpisode() == null){
             movieWatchingViewModelFrag.setCurrentEpisode(movie.getListEpisode().get(0));
         }
-        myVideoPlayer.playFromUrl(movieWatchingViewModelFrag.getCurrentEpisode().getSourceUrl());
+        myVideoPlayer.play(movieWatchingViewModelFrag.getCurrentEpisode());
         OnEpisodeClick onEpisodeClick = (Episode episode) -> {
             movieWatchingViewModelFrag.setCurrentEpisode(episode);
-            myVideoPlayer.playFromUrl(episode.getSourceUrl());
+            myVideoPlayer.play(episode);
         };
         recycleViewEpisodeListAdapter = new RecycleViewEpisodeListAdapter(context, movie.getListEpisode(), movieWatchingViewModelFrag.getCurrentEpisode(), onEpisodeClick);
         recycleViewEpisodeList.setAdapter(recycleViewEpisodeListAdapter);

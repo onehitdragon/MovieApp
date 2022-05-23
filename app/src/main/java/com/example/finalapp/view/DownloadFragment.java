@@ -29,6 +29,8 @@ import com.example.finalapp.model.InfoDownloadMovie;
 import com.example.finalapp.model.Movie;
 import com.example.finalapp.service.MovieDownloadService;
 import com.example.finalapp.viewmodel.DownloadViewModelFrag;
+import com.example.finalapp.viewmodel.HomeViewModelFrag;
+import com.example.finalapp.viewmodel.MovieWatchingViewModelFrag;
 
 import java.util.ArrayList;
 
@@ -62,8 +64,15 @@ public class DownloadFragment extends Fragment {
 
         // init
         downloadViewModelFrag = new ViewModelProvider((MainActivity)context).get(DownloadViewModelFrag.class);
+        InfoDownloadMovie.OnDownloadMovieClick onDownloadMovieClick = (InfoDownloadMovie infoDownloadMovie) -> {
+            HomeViewModelFrag homeViewModelFrag = new ViewModelProvider((MainActivity)context).get(HomeViewModelFrag.class);
+            homeViewModelFrag.setCurrentMovie(infoDownloadMovie.getMovie());
+            MovieWatchingViewModelFrag movieWatchingViewModelFrag = new ViewModelProvider((MainActivity)context).get(MovieWatchingViewModelFrag.class);
+            movieWatchingViewModelFrag.setCurrentEpisode(infoDownloadMovie.getEpisode());
+            ((MainActivity)context).openMovieWatchingFragment();
+        };
         downloadViewModelFrag.getListDownloadMovie().observe(getViewLifecycleOwner(), (ArrayList<InfoDownloadMovie> listDownloadMovie) -> {
-            recycleViewDownloadMovieListAdapter = new RecycleViewDownloadMovieListAdapter(context, listDownloadMovie, getViewLifecycleOwner());
+            recycleViewDownloadMovieListAdapter = new RecycleViewDownloadMovieListAdapter(context, listDownloadMovie, getViewLifecycleOwner(), onDownloadMovieClick);
             recycleViewDownloadMovieList.setAdapter(recycleViewDownloadMovieListAdapter);
         });
         downloadViewModelFrag.loadListDownloadMovie();

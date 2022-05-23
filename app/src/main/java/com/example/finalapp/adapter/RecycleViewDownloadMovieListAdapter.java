@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
+import com.example.finalapp.model.Episode;
 import com.example.finalapp.model.InfoDownloadMovie;
 import com.example.finalapp.model.Movie;
 import com.example.finalapp.mymenu.MyMenu;
@@ -33,11 +34,13 @@ public class RecycleViewDownloadMovieListAdapter extends RecyclerView.Adapter<Re
     private Context context;
     private ArrayList<InfoDownloadMovie> listMovie;
     private LifecycleOwner lifecycleOwner;
+    private InfoDownloadMovie.OnDownloadMovieClick onDownloadMovieClick;
 
-    public RecycleViewDownloadMovieListAdapter(Context context, ArrayList<InfoDownloadMovie> listMovie, LifecycleOwner lifecycleOwner) {
+    public RecycleViewDownloadMovieListAdapter(Context context, ArrayList<InfoDownloadMovie> listMovie, LifecycleOwner lifecycleOwner, InfoDownloadMovie.OnDownloadMovieClick onDownloadMovieClick) {
         this.context = context;
         this.listMovie = listMovie;
         this.lifecycleOwner = lifecycleOwner;
+        this.onDownloadMovieClick = onDownloadMovieClick;
     }
 
     @NonNull
@@ -78,8 +81,15 @@ public class RecycleViewDownloadMovieListAdapter extends RecyclerView.Adapter<Re
 
         public void bind(InfoDownloadMovie infoDownloadMovie){
             Movie movie = infoDownloadMovie.getMovie();
+            Episode episode = infoDownloadMovie.getEpisode();
             Glide.with(context).load(movie.getAvatarUrl()).into(imageViewAvatar);
-            textViewNameMovie.setText(movie.getTitle());
+            if(movie.getListEpisode().size() == 1){
+                textViewNameMovie.setText(movie.getTitle());
+            }
+            else{
+                String nameMovie = movie.getTitle() + " Tập " + episode.getNumber();
+                textViewNameMovie.setText(nameMovie);
+            }
             textViewEngName.setText(movie.getEngTitle());
             textViewRating.setText(String.valueOf(movie.getRating()));
 
@@ -113,9 +123,6 @@ public class RecycleViewDownloadMovieListAdapter extends RecyclerView.Adapter<Re
                     Log.e("TAG", "onServiceDisconnected: ");
                 }
             }, Context.BIND_AUTO_CREATE);
-            itemView.setOnClickListener((View view) -> {
-
-            });
         }
 
         private void complete(InfoDownloadMovie infoDownloadMovie){
@@ -129,6 +136,12 @@ public class RecycleViewDownloadMovieListAdapter extends RecyclerView.Adapter<Re
                 PopupMenu popupMenu = myMenu.createDownloadedMovieMenu(itemView, infoDownloadMovie);
                 popupMenu.show();
                 return true;
+            });
+
+            //
+            itemView.setOnClickListener((View view) -> {
+                infoDownloadMovie.getEpisode().setDestinationPathSaved(infoDownloadMovie.getDestinationPath(context));
+                onDownloadMovieClick.click(infoDownloadMovie);
             });
         }
 

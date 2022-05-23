@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.finalapp.R;
+import com.example.finalapp.model.Episode;
 import com.example.finalapp.view.MainActivity;
 import java.io.IOException;
 import java.util.logging.Handler;
@@ -262,13 +263,20 @@ public class MyVideoPlayer {
         });
     }
 
-    public void playFromUrl(String url){
+    public void play(Episode episode){
         if(thread != null && thread.isAlive()){
             thread.interrupt();
         }
         if(threadHideControl != null && threadHideControl.isAlive()){
             threadHideControl.interrupt();
         }
-        videoView.setVideoPath(url);
+        if(episode.getDestinationPathSaved() == null){
+            videoView.setVideoPath(episode.getSourceUrl());
+        }
+        else{
+            Uri uri = Uri.fromFile(episode.getDestinationPathSaved());
+            videoView.setVideoURI(uri);
+            Log.e("TAG", "play storage: " + uri.getPath());
+        }
     }
 }
