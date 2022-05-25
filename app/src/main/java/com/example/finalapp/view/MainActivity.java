@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.Manifest;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.finalapp.R;
+import com.example.finalapp.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private RelativeLayout wrapBtnHome, wrapBtnHistory, wrapBtnDownload, wrapBtnUser;
     private RelativeLayout currentWrapBtn;
     private View.OnClickListener wrapBtnOnClickListener;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         // init
         currentWrapBtn = wrapBtnHome;
         openFragmentExisted(new HomeFragment(), false, "HomeFragment");
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
 
         // event
         wrapBtnOnClickListener = (View view) -> {
@@ -53,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
             wrapBtnOnClickListener.onClick(v);
             openFragmentExisted(new DownloadFragment(), true, "DownloadFragment");
         });
-        wrapBtnUser.setOnClickListener(wrapBtnOnClickListener);
+        wrapBtnUser.setOnClickListener((View v) -> {
+            wrapBtnOnClickListener.onClick(v);
+            openFragmentExisted(new SettingFragment(), true, "SettingFragment");
+        });
     }
 
     private void activeWrapBtn(RelativeLayout wrapBtn){
@@ -73,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    private void openFragmentExisted(Fragment fragment, boolean addToBackStack, String name){
+    public void openFragmentExisted(Fragment fragment, boolean addToBackStack, String name){
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragmentExisted = fragmentManager.findFragmentByTag(name);
         if(fragmentExisted != null){
@@ -116,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
             }
             case "HistoryFragment" : {
                 wrapBtnOnClickListener.onClick(wrapBtnHistory);
+                break;
+            }
+            case "DownloadFragment" : {
+                wrapBtnOnClickListener.onClick(wrapBtnDownload);
+                break;
+            }
+            case "SettingFragment" : {
+                wrapBtnOnClickListener.onClick(wrapBtnUser);
                 break;
             }
         }

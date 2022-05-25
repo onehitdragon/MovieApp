@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -130,6 +131,10 @@ public class LoginRegisterActivity extends AppCompatActivity {
                             myDialog.setImageSrc(R.drawable.popcorn);
                             myDialog.setTitle("Thành công");
                             myDialog.setContent("Đăng nhập thành công");
+                            myDialog.setOnAgree(() -> {
+                                Intent intent = new Intent(this, MainActivity.class);
+                                startActivity(intent);
+                            });
                             myDialog.show();
                         }
                     });
@@ -225,6 +230,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
             myDialog.show();
         });
 
+        // event
         // login
         btnLogin.setOnClickListener((View view) -> {
             myButtonAnimation.toggleButtonAnimation();

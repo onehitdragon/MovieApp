@@ -11,4 +11,5 @@ public interface AccountService {
     @FormUrlEncoded
     Call<Void> register(@Field("email") String email, @Field("password") String password, @Field("lastName") String lastName,
         @Field("firstName") String firstName, @Field("birthday") String birthDay, @Field("gender") boolean gender);
+
 }

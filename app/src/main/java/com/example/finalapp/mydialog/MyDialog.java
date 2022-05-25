@@ -87,12 +87,8 @@ public class MyDialog {
         title = "Thông báo";
         content = "Thông báo";
         imageSrc = R.drawable.cloud_service;
-        onAgree = () -> {
-            dialog.dismiss();
-        };
-        onCancer = () -> {
-            dialog.dismiss();
-        };
+        onAgree = () -> { };
+        onCancer = () -> { };
     }
     public void show(){
         ImageView imageView = dialog.findViewById(R.id.imageView);
@@ -105,9 +101,11 @@ public class MyDialog {
         textViewContent.setText(content);
         btnAgree.setOnClickListener((View view) -> {
             onAgree.agree();
+            dialog.dismiss();
         });
         btnCancer.setOnClickListener((View view) -> {
             onCancer.cancer();
+            dialog.dismiss();
         });
 
         dialog.show();

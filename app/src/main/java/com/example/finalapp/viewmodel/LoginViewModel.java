@@ -39,7 +39,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public LoginViewModel(){
-        account = new Account();
+        account = Account.getInstance();
         retrofit = RetrofitClient.createRetrofit();
         accountCheckModel = new MutableLiveData<>();
     }
