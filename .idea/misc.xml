@@ -48,10 +48,14 @@
         <entry key="..\:/finalapp/app/src/main/res/layout/download_movie_item.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/episode_item.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_download.xml" value="0.33" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_feed_back.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_history.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_intro.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_watching.xml" value="0.25" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_password_change.xml" value="0.33" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_policy.xml" value="0.25" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_setting.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/genre_item.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/genre_menu_item.xml" value="0.20416666666666666" />
         <entry key="..\:/finalapp/app/src/main/res/layout/genre_movie_item.xml" value="0.20416666666666666" />
