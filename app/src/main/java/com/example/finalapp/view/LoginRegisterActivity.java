@@ -29,6 +29,7 @@ import com.example.finalapp.myanimation.MyButton2Animation;
 import com.example.finalapp.myanimation.MyButtonAnimation;
 import com.example.finalapp.mydialog.MyDialog;
 import com.example.finalapp.mydialog.MyDialogFactory;
+import com.example.finalapp.myvalidation.MyValidation;
 import com.example.finalapp.remoterepository.AccountCheckPojo;
 import com.example.finalapp.viewmodel.LoginRegisterViewModel;
 import com.example.finalapp.viewmodel.LoginViewModel;
@@ -289,58 +290,17 @@ public class LoginRegisterActivity extends AppCompatActivity {
         editTextRepeatPasswordRegister.addTextChangedListener(new MyTextWatcher(editTextRepeatPasswordRegister));
         editTextGenderRegister.addTextChangedListener(new MyTextWatcher(editTextGenderRegister));
     }
-//    private void createBackgroundAnimation(){
-//        AnimationDrawable backgroundAnimation = (AnimationDrawable) backgroundLayout.getBackground();
-//        backgroundAnimation.setEnterFadeDuration(1000);
-//        backgroundAnimation.setExitFadeDuration(1000);
-//        backgroundAnimation.start();
-//    }
+
     private void changeBackgroundEditTextHandler(EditText editText, int status){
         handler.post(() -> {
-            changeBackgroundEditText(editText, status);
+            MyValidation.changeBackgroundEditText(this, editText, status);
         });
-    }
-
-    private void changeBackgroundEditText(EditText editText, int status){
-        ImageView imgView = null;
-        ViewGroup viewGroup = (ViewGroup) editText.getParent();
-        if(viewGroup.getChildAt(1) != null){
-            imgView = (ImageView) viewGroup.getChildAt(1);
-        }
-        if(status == 0){
-            editText.setBackgroundResource(R.drawable.edit_text_design_0);
-            if(imgView != null){
-                Glide.with(this).clear(imgView);
-            }
-        }
-        if(status == 1){
-            editText.setBackgroundResource(R.drawable.edit_text_design_0_fail);
-            if(imgView != null){
-                Glide.with(this).load(R.drawable.close_red).into(imgView);
-            }
-        }
-        if(status == 2){
-            editText.setBackgroundResource(R.drawable.edit_text_design_0_success);
-            if(imgView != null){
-                Glide.with(this).load(R.drawable.tick_green_light).into(imgView);
-            }
-        }
     }
 
     private void changeTextViewValidationHandler(TextView textView, boolean show, String error){
         handler.post(() -> {
-            changeTextViewValidation(textView, show, error);
+            MyValidation.changeTextViewValidation(textView, show, error);
         });
-    }
-
-    private void changeTextViewValidation(TextView textView, boolean show, String error){
-        textView.setText(error);
-        if(show){
-            textView.setVisibility(View.VISIBLE);
-        }
-        else{
-            textView.setVisibility(View.GONE);
-        }
     }
 
     private class MyTextWatcher implements TextWatcher{
@@ -362,7 +322,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            changeBackgroundEditText(editText, 0);
+            MyValidation.changeBackgroundEditText(LoginRegisterActivity.this, editText, 0);
         }
     }
 }

@@ -15,4 +15,8 @@ public interface AccountService {
 
     @GET("Account/GetUser")
     Call<UserPojo> getUser(@Query("email") String email);
+
+    @POST("Account/ChangePassword")
+    @FormUrlEncoded
+    Call<Void> changePassword(@Field("email") String email, @Field("newPassword") String newPassword);
 }

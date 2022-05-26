@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.finalapp.R;
+import com.example.finalapp.viewmodel.LoginRegisterViewModel;
+import com.example.finalapp.viewmodel.SettingViewModelFrag;
 
 public class SettingFragment extends Fragment {
     private Context context;
-    private CardView btnYoutube, btnDiscord, btnGithub, btnChangePassword, btnFeedBack, btnPolicy;
+    private CardView btnYoutube, btnDiscord, btnGithub, btnChangePassword, btnFeedBack, btnPolicy, btnLogOut;
     private String youtubeUrl = "https://www.youtube.com/channel/UClN-6RYy1Dvr1eAUTqn8HgQ";
     private String discordUrl = "https://discord.gg/H3rgYFVk";
     private String githubUrl = "https://github.com/onehitdragon";
+    private SettingViewModelFrag settingViewModelFrag;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -48,8 +52,10 @@ public class SettingFragment extends Fragment {
         btnChangePassword = view.findViewById(R.id.btnChangePassword);
         btnFeedBack = view.findViewById(R.id.btnFeedBack);
         btnPolicy = view.findViewById(R.id.btnPolicy);
+        btnLogOut = view.findViewById(R.id.btnLogOut);
 
         // init
+        settingViewModelFrag = new ViewModelProvider((MainActivity) context).get(SettingViewModelFrag.class);
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
         // event
@@ -73,6 +79,12 @@ public class SettingFragment extends Fragment {
         });
         btnPolicy.setOnClickListener((View v) -> {
 
+        });
+        btnLogOut.setOnClickListener((View v) -> {
+            settingViewModelFrag.removeAccountFromLocal();
+            Intent openActivityIntent = new Intent(context, LoginRegisterActivity.class);
+            startActivity(openActivityIntent);
+            ((MainActivity) context).finish();
         });
     }
 }

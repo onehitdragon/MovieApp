@@ -37,7 +37,6 @@ public class MyButton2Animation implements MyAnimation{
             stopButtonAnimation();
         }
         isOpen = !isOpen;
-
     }
     private void startButtonAnimation(){
         Glide.with(context).load(R.drawable.output_onlinegiftools).into(imgView);

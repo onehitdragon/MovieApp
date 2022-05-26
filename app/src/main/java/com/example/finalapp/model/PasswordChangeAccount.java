@@ -29,7 +29,9 @@ public class PasswordChangeAccount{
         this.repeatNewPassword = repeatNewPassword;
     }
 
-    public PasswordChangeAccount(){
-
+    public PasswordChangeAccount(String oldPassword, String newPassword, String repeatNewPassword) {
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
+        this.repeatNewPassword = repeatNewPassword;
     }
 }
