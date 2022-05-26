@@ -23,12 +23,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.finalapp.R;
 import com.example.finalapp.databinding.ActivityLoginRegisterBinding;
+import com.example.finalapp.model.Account;
 import com.example.finalapp.myanimation.MyAnimation;
 import com.example.finalapp.myanimation.MyButton2Animation;
 import com.example.finalapp.myanimation.MyButtonAnimation;
 import com.example.finalapp.mydialog.MyDialog;
 import com.example.finalapp.mydialog.MyDialogFactory;
 import com.example.finalapp.remoterepository.AccountCheckPojo;
+import com.example.finalapp.viewmodel.LoginRegisterViewModel;
 import com.example.finalapp.viewmodel.LoginViewModel;
 import com.example.finalapp.viewmodel.RegisterViewModel;
 
@@ -46,10 +48,12 @@ public class LoginRegisterActivity extends AppCompatActivity {
     ImageView imgLoad, imgLoadRegister;
     MyAnimation myButtonAnimation, myButton2Animation, myButtonRegisterAnimation, myButton2RegisterAnimation;
     DatePickerDialog datePickerDialogBirthDay;
+    private LoginRegisterViewModel loginRegisterViewModel;
     private LoginViewModel loginViewModel;
     private RegisterViewModel registerViewModel;
     private ActivityLoginRegisterBinding binding;
     private final Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +101,15 @@ public class LoginRegisterActivity extends AppCompatActivity {
         myButton2RegisterAnimation = new MyButton2Animation(this, btnRegister2, imgLoadRegister);
 
         // init view model
+        loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
+        Account accountSaved = loginRegisterViewModel.getAccountLocal();
+        if(accountSaved != null){
+            Account.setInstance(accountSaved);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.setLoginViewModel(loginViewModel);
         loginViewModel.getAccountCheckModel().observe(this, (AccountCheckPojo accountCheckPojo) -> {
@@ -134,6 +147,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
                             myDialog.setOnAgree(() -> {
                                 Intent intent = new Intent(this, MainActivity.class);
                                 startActivity(intent);
+                                loginViewModel.saveAccountToLocal();
+                                finish();
                             });
                             myDialog.show();
                         }

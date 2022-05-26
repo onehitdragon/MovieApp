@@ -21,6 +21,10 @@ public class Account{
         return instance;
     }
 
+    public static void setInstance(Account account){
+        instance = account;
+    }
+
     public String getEmail() {
         return email;
     }

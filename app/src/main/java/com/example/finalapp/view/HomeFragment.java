@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.example.finalapp.adapter.RecycleViewNewestMovieListAdapter;
 import com.example.finalapp.adapter.RecycleViewSearchResultListAdapter;
 import com.example.finalapp.model.Genre;
 import com.example.finalapp.model.Movie;
+import com.example.finalapp.model.User;
 import com.example.finalapp.viewmodel.HomeViewModelFrag;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
     private Context context;
     private ImageView imageViewAvatar;
+    private TextView textViewFullName;
     private HomeViewModelFrag homeViewModelFrag;
     private RecyclerView recycleViewNewestList, recycleViewGenreMenu, recycleViewGenreMovieList, recycleViewSearchResultList;
     private RecycleViewNewestMovieListAdapter recycleViewNewestMovieListAdapter;
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment {
 
         // find view
         imageViewAvatar = view.findViewById(R.id.imageViewAvatar);
+        textViewFullName = view.findViewById(R.id.textViewFullName);
         recycleViewNewestList = view.findViewById(R.id.recycleViewNewestList);
         recycleViewGenreMenu = view.findViewById(R.id.recycleViewGenreMenu);
         recycleViewGenreMovieList = view.findViewById(R.id.recycleViewGenreMovieList);
@@ -85,8 +89,12 @@ public class HomeFragment extends Fragment {
         }
 
         // init
-        Glide.with(this).load(R.drawable.bg3).circleCrop().into(imageViewAvatar);
+        //Glide.with(this).load(R.drawable.bg3).circleCrop().into(imageViewAvatar);
         homeViewModelFrag = new ViewModelProvider((ViewModelStoreOwner) context).get(HomeViewModelFrag.class);
+        homeViewModelFrag.getUser().observe(getViewLifecycleOwner(), (User user) -> {
+            String fullName = user.getLastName() + " " + user.getFirstName();
+            textViewFullName.setText(fullName);
+        });
         Movie.OnMovieClick onMovieClick = (Movie movie) -> {
             homeViewModelFrag.setCurrentMovie(movie);
             ((MainActivity) context).openMovieIntroFragment();

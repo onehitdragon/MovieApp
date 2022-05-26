@@ -1,5 +1,7 @@
 package com.example.finalapp.model;
 
+import com.example.finalapp.remoterepository.UserPojo;
+
 import java.util.Calendar;
 
 public class User extends Account{
@@ -58,5 +60,15 @@ public class User extends Account{
         this.birthDay = birthDay;
         this.gender = gender;
         this.repeatPassword = repeatPassword;
+    }
+
+    public static User convertPojo(UserPojo userPojo){
+        Calendar calendar = Calendar.getInstance();
+        String[] birthDay = userPojo.birthDay.split("T")[0].split("-");
+        int y = Integer.parseInt(birthDay[0]);
+        int m = Integer.parseInt(birthDay[1]);
+        int d = Integer.parseInt(birthDay[2]);
+        calendar.set(y, m, d);
+        return new User(userPojo.email, userPojo.password, userPojo.lastName, userPojo.firstName, calendar, userPojo.gender, "");
     }
 }

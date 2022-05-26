@@ -1,8 +1,8 @@
 package com.example.finalapp.remoterepository;
 
-import java.util.Calendar;
-
 public class UserPojo {
+    public String email;
+    public String password;
     public String lastName;
     public String firstName;
     public String birthDay;

@@ -6,13 +6,17 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
+import com.example.finalapp.model.Account;
 import com.example.finalapp.model.Genre;
 import com.example.finalapp.model.Movie;
+import com.example.finalapp.model.User;
+import com.example.finalapp.remoterepository.AccountService;
 import com.example.finalapp.remoterepository.GenrePojo;
 import com.example.finalapp.remoterepository.GenreService;
 import com.example.finalapp.remoterepository.MoviePojo;
 import com.example.finalapp.remoterepository.MovieService;
 import com.example.finalapp.remoterepository.RetrofitClient;
+import com.example.finalapp.remoterepository.UserPojo;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -27,6 +31,8 @@ public class HomeViewModelFrag extends ViewModel {
     private Retrofit retrofit;
     private MovieService movieService;
     private GenreService genreService;
+    private AccountService accountService;
+    private MutableLiveData<User> user;
     private MutableLiveData<ArrayList<Movie>> listNewestMovie;
     private MutableLiveData<ArrayList<Genre>> listGenre;
     private MutableLiveData<ArrayList<Movie>> listMovieByGenre;
@@ -87,18 +93,44 @@ public class HomeViewModelFrag extends ViewModel {
         return currentKey;
     }
 
+    public MutableLiveData<User> getUser() {
+        return user;
+    }
+
     public HomeViewModelFrag() {
+        user = new MutableLiveData<>();
         listNewestMovie = new MutableLiveData<>();
         listGenre = new MutableLiveData<>();
         listMovieByGenre = new MutableLiveData<>();
         retrofit = RetrofitClient.createRetrofit();
+        accountService = retrofit.create(AccountService.class);
         movieService = retrofit.create(MovieService.class);
         genreService = retrofit.create(GenreService.class);
         listSearchResult = new MutableLiveData<>();
         currentKey = "";
 
+        loadUser();
         loadListNewestMovie();
         loadListGenre();
+    }
+
+    private void loadUser(){
+        String email = Account.getInstance().getEmail();
+        Call<UserPojo> call = accountService.getUser(email);
+        call.enqueue(new Callback<UserPojo>() {
+            @Override
+            public void onResponse(Call<UserPojo> call, Response<UserPojo> response) {
+                Log.e("TAG", "onResponse: " + new Gson().toJson(response.body()));
+                if (response.body() == null) return;
+                User userResult = User.convertPojo(response.body());
+                user.setValue(userResult);
+            }
+
+            @Override
+            public void onFailure(Call<UserPojo> call, Throwable t) {
+                Log.e("TAG", "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     public void loadListNewestMovie(){

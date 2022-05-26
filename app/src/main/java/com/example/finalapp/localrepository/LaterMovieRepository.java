@@ -35,6 +35,7 @@ public class LaterMovieRepository {
             if(laterMovie.getId() == movie.getId()){
                 DB = mySqliteOpenHelper.getWritableDatabase();
                 DB.execSQL("DELETE FROM LaterMovie WHERE Id = " + cursor.getInt(0));
+                break;
             }
         }
         cursor.close();

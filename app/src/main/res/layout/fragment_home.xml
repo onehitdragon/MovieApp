@@ -44,6 +44,7 @@
                             android:textStyle="bold"
                             />
                         <TextView
+                            android:id="@+id/textViewFullName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nguyễn A"
@@ -67,7 +68,8 @@
                     android:id="@+id/imageViewAvatar"
                     android:layout_width="53dp"
                     android:layout_height="53dp"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/diplodocus"/>
             </LinearLayout>
             <!--  search bar  -->
             <LinearLayout

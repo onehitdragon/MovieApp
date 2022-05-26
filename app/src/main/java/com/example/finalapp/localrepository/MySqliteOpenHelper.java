@@ -37,6 +37,10 @@ public class MySqliteOpenHelper extends SQLiteOpenHelper {
                 + "InfoDownloadMovie TEXT"
                 + ")";
         DB.execSQL(query);
+        query = "CREATE TABLE IF NOT EXISTS Account("
+                + "Account TEXT"
+                + ")";
+        DB.execSQL(query);
     }
 
     @Override

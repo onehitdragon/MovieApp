@@ -1,10 +1,14 @@
 package com.example.finalapp.viewmodel;
 
+import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.finalapp.localrepository.AccountRepository;
 import com.example.finalapp.model.Account;
 import com.example.finalapp.remoterepository.AccountCheckPojo;
 import com.example.finalapp.remoterepository.AccountService;
@@ -16,11 +20,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends AndroidViewModel {
     private static final String TAG = "AccountViewModel";
     private Account account;
     private final Retrofit retrofit;
     private MutableLiveData<AccountCheckPojo> accountCheckModel;
+    private AccountRepository accountRepository;
 
     public MutableLiveData<AccountCheckPojo> getAccountCheckModel() {
         return accountCheckModel;
@@ -38,10 +43,12 @@ public class LoginViewModel extends ViewModel {
         this.account = account;
     }
 
-    public LoginViewModel(){
+    public LoginViewModel(@NonNull Application application){
+        super(application);
         account = Account.getInstance();
         retrofit = RetrofitClient.createRetrofit();
         accountCheckModel = new MutableLiveData<>();
+        accountRepository = new AccountRepository(application);
     }
 
     public void checkAccount(){
@@ -60,5 +67,9 @@ public class LoginViewModel extends ViewModel {
                 accountCheckModel.setValue(null);
             }
         });
+    }
+
+    public void saveAccountToLocal(){
+        accountRepository.insert(account);
     }
 }
