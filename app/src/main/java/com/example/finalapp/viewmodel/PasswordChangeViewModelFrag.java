@@ -107,7 +107,6 @@ public class PasswordChangeViewModelFrag extends AndroidViewModel {
 
     public void changePassword(){
         if(validation.isEmpty()){
-            Log.e("TAG", "changePassword1: " + new Gson().toJson(passwordChangeAccount));
             Account account = Account.getInstance();
             Call<Void> call = accountService.changePassword(account.getEmail(), passwordChangeAccount.getNewPassword());
             call.enqueue(new Callback<Void>() {
@@ -115,7 +114,6 @@ public class PasswordChangeViewModelFrag extends AndroidViewModel {
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     changePasswordSuccess.setValue(true);
                     account.setPassword(passwordChangeAccount.getNewPassword());
-                    Log.e("TAG", "changePassword2: " + new Gson().toJson(account));
                 }
 
                 @Override

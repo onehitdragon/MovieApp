@@ -22,6 +22,7 @@ public class MovieWatchingViewModelFrag extends AndroidViewModel {
     private HistoryMovieRepository historyMovieRepository;
     private LaterMovieRepository laterMovieRepository;
     private DownloadMovieRepository downloadMovieRepository;
+    private String currentContentFeedBack;
 
     public Episode getCurrentEpisode() {
         return currentEpisode;
@@ -31,11 +32,20 @@ public class MovieWatchingViewModelFrag extends AndroidViewModel {
         this.currentEpisode = currentEpisode;
     }
 
+    public String getCurrentContentFeedBack() {
+        return currentContentFeedBack;
+    }
+
+    public void setCurrentContentFeedBack(String currentContentFeedBack) {
+        this.currentContentFeedBack = currentContentFeedBack;
+    }
+
     public MovieWatchingViewModelFrag(Application application) {
         super(application);
         historyMovieRepository = new HistoryMovieRepository(application);
         laterMovieRepository = new LaterMovieRepository(application);
         downloadMovieRepository = new DownloadMovieRepository(application);
+        currentContentFeedBack = "";
     }
 
     public void addMovieToHistory(Movie movie){

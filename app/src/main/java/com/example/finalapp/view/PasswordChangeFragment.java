@@ -66,9 +66,9 @@ public class PasswordChangeFragment extends Fragment {
         editTextOldPassword = view.findViewById(R.id.editTextOldPassword);
         editTextNewPassword = view.findViewById(R.id.editTextNewPassword);
         editTextRepeatNewPassword = view.findViewById(R.id.editTextRepeatNewPassword);
-        editTextOldPassword.addTextChangedListener(new MyTextWatcher(editTextOldPassword));
-        editTextNewPassword.addTextChangedListener(new MyTextWatcher(editTextNewPassword));
-        editTextRepeatNewPassword.addTextChangedListener(new MyTextWatcher(editTextRepeatNewPassword));
+        editTextOldPassword.addTextChangedListener(new MyValidation.MyTextWatcher(context, editTextOldPassword));
+        editTextNewPassword.addTextChangedListener(new MyValidation.MyTextWatcher(context, editTextNewPassword));
+        editTextRepeatNewPassword.addTextChangedListener(new MyValidation.MyTextWatcher(context, editTextRepeatNewPassword));
         textViewOldPasswordValidation = view.findViewById(R.id.textViewOldPasswordValidation);
         textViewNewPasswordValidation = view.findViewById(R.id.textViewNewPasswordValidation);
         textViewRepeatNewPasswordValidation = view.findViewById(R.id.textViewRepeatNewPasswordValidation);
@@ -154,28 +154,5 @@ public class PasswordChangeFragment extends Fragment {
         handler.post(() -> {
             MyValidation.changeTextViewValidation(textView, show, error);
         });
-    }
-
-    private class MyTextWatcher implements TextWatcher {
-        private EditText editText;
-
-        public MyTextWatcher(EditText editText) {
-            this.editText = editText;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            MyValidation.changeBackgroundEditText(context, editText, 0);
-        }
     }
 }

@@ -254,8 +254,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
         btnCloseLoginArea.setOnClickListener((View view) -> {
             myButtonAnimation.toggleButtonAnimation();
         });
-        editTextUserName.addTextChangedListener(new MyTextWatcher(editTextUserName));
-        editTextPassword.addTextChangedListener(new MyTextWatcher(editTextPassword));
+        editTextUserName.addTextChangedListener(new MyValidation.MyTextWatcher(this, editTextUserName));
+        editTextPassword.addTextChangedListener(new MyValidation.MyTextWatcher(this, editTextPassword));
         btnLogin2.setOnClickListener((View view) -> {
             myButton2Animation.toggleButtonAnimation();
             loginViewModel.checkAccount();
@@ -283,12 +283,12 @@ public class LoginRegisterActivity extends AppCompatActivity {
             myButton2RegisterAnimation.toggleButtonAnimation();
             registerViewModel.validation();
         });
-        editTextEmailRegister.addTextChangedListener(new MyTextWatcher(editTextEmailRegister));
-        editTextLastNameRegister.addTextChangedListener(new MyTextWatcher(editTextLastNameRegister));
-        editTextFirstNameRegister.addTextChangedListener(new MyTextWatcher(editTextFirstNameRegister));
-        editTextPasswordRegister.addTextChangedListener(new MyTextWatcher(editTextPasswordRegister));
-        editTextRepeatPasswordRegister.addTextChangedListener(new MyTextWatcher(editTextRepeatPasswordRegister));
-        editTextGenderRegister.addTextChangedListener(new MyTextWatcher(editTextGenderRegister));
+        editTextEmailRegister.addTextChangedListener(new MyValidation.MyTextWatcher(this, editTextEmailRegister));
+        editTextLastNameRegister.addTextChangedListener(new MyValidation.MyTextWatcher(this, editTextLastNameRegister));
+        editTextFirstNameRegister.addTextChangedListener(new MyValidation.MyTextWatcher(this, editTextFirstNameRegister));
+        editTextPasswordRegister.addTextChangedListener(new MyValidation.MyTextWatcher(this, editTextPasswordRegister));
+        editTextRepeatPasswordRegister.addTextChangedListener(new MyValidation.MyTextWatcher(this, editTextRepeatPasswordRegister));
+        editTextGenderRegister.addTextChangedListener(new MyValidation.MyTextWatcher(this, editTextGenderRegister));
     }
 
     private void changeBackgroundEditTextHandler(EditText editText, int status){
@@ -301,28 +301,5 @@ public class LoginRegisterActivity extends AppCompatActivity {
         handler.post(() -> {
             MyValidation.changeTextViewValidation(textView, show, error);
         });
-    }
-
-    private class MyTextWatcher implements TextWatcher{
-        private EditText editText;
-
-        public MyTextWatcher(EditText editText) {
-            this.editText = editText;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            MyValidation.changeBackgroundEditText(LoginRegisterActivity.this, editText, 0);
-        }
     }
 }

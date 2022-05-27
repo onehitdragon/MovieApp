@@ -1,6 +1,8 @@
 package com.example.finalapp.myvalidation;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -44,6 +46,31 @@ public class MyValidation {
         }
         else{
             textView.setVisibility(View.GONE);
+        }
+    }
+
+    public static class MyTextWatcher implements TextWatcher {
+        private Context context;
+        private EditText editText;
+
+        public MyTextWatcher(Context context, EditText editText) {
+            this.context = context;
+            this.editText = editText;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            MyValidation.changeBackgroundEditText(context, editText, 0);
         }
     }
 }

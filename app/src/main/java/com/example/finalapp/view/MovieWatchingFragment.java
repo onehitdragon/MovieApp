@@ -62,7 +62,7 @@ public class MovieWatchingFragment extends Fragment {
     private RecycleViewActorListAdapter recycleViewActorListAdapter;
     private RecycleViewEpisodeListAdapter recycleViewEpisodeListAdapter;
     private MyVideoPlayer myVideoPlayer;
-    private View btnAddLaterMovie, btnDownloadMovie;
+    private View btnAddLaterMovie, btnDownloadMovie, btnFeedBack;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -85,6 +85,7 @@ public class MovieWatchingFragment extends Fragment {
         recycleViewEpisodeList = view.findViewById(R.id.recycleViewEpisodeList);
         btnAddLaterMovie = view.findViewById(R.id.btnAddLaterMovie);
         btnDownloadMovie = view.findViewById(R.id.btnDownloadMovie);
+        btnFeedBack = view.findViewById(R.id.btnFeedBack);
 
         // init view
         myVideoPlayer = new MyVideoPlayer(context, view.findViewById(R.id.videoView), view.findViewById(R.id.control));
@@ -148,6 +149,12 @@ public class MovieWatchingFragment extends Fragment {
                 myDialog = MyDialogFactory.createAddedDownloadFail(context);
             }
             myDialog.show();
+        });
+        btnFeedBack.setOnClickListener((View v) -> {
+            Episode currentEpisode = movieWatchingViewModelFrag.getCurrentEpisode();
+            String contentPattern = movie.getTitle() + " (Tập " + currentEpisode.getNumber() + ") bị lỗi !!!";
+            movieWatchingViewModelFrag.setCurrentContentFeedBack(contentPattern);
+            ((MainActivity) context).openFragmentExisted(new FeedBackFragment(), true, "FeedBackFragment");
         });
     }
 

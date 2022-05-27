@@ -75,10 +75,10 @@ public class SettingFragment extends Fragment {
             ((MainActivity) context).openFragmentExisted(new PasswordChangeFragment(), true, "PasswordChangeFragment");
         });
         btnFeedBack.setOnClickListener((View v) -> {
-
+            ((MainActivity) context).openFragmentExisted(new FeedBackFragment(), true, "FeedBackFragment");
         });
         btnPolicy.setOnClickListener((View v) -> {
-
+            ((MainActivity) context).openFragmentExisted(new PolicyFragment(), true, "PolicyFragment");
         });
         btnLogOut.setOnClickListener((View v) -> {
             settingViewModelFrag.removeAccountFromLocal();

@@ -201,6 +201,33 @@
                             style="@style/text_style_16"
                             android:textColor="@drawable/button_design_0_text"/>
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/btnFeedBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:background="@drawable/image_design_feedback_0"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:text="Phản hồi"
+                            style="@style/text_style_16"
+                            android:textColor="@drawable/button_design_0_text"/>
+                    </LinearLayout>
                 </LinearLayout>
                 <!--  actors  -->
                 <TextView

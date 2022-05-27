@@ -10,6 +10,7 @@
         <entry key="..\:/finalapp/app/src/main/res/drawable-v24/edit_text_design_0_fail.xml" value="0.161" />
         <entry key="..\:/finalapp/app/src/main/res/drawable-v24/edit_text_design_0_success.xml" value="0.161" />
         <entry key="..\:/finalapp/app/src/main/res/drawable-v24/edit_text_design_0_success_1.xml" value="0.161" />
+        <entry key="..\:/finalapp/app/src/main/res/drawable-v24/image_design_feedback_0.xml" value="0.1265" />
         <entry key="..\:/finalapp/app/src/main/res/drawable-v24/seekbar_design_0_thumb.xml" value="0.144" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/actor_design_0.xml" value="0.144" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/bg_anim.xml" value="0.2" />
@@ -35,6 +36,7 @@
         <entry key="..\:/finalapp/app/src/main/res/drawable/edittext_seach_design_0.xml" value="0.1535" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/history_image_design_0.xml" value="0.1415" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/image_design_0.xml" value="0.1415" />
+        <entry key="..\:/finalapp/app/src/main/res/drawable/image_design_feedback_0.xml" value="0.1265" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/image_design_history_0.xml" value="0.1415" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/seekbar_design_0.xml" value="0.144" />
         <entry key="..\:/finalapp/app/src/main/res/drawable/seekbar_design_0_thumb.xml" value="0.144" />
@@ -52,7 +54,7 @@
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_history.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_intro.xml" value="0.25" />
-        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_watching.xml" value="0.25" />
+        <entry key="..\:/finalapp/app/src/main/res/layout/fragment_movie_watching.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_password_change.xml" value="0.33" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_policy.xml" value="0.25" />
         <entry key="..\:/finalapp/app/src/main/res/layout/fragment_setting.xml" value="0.25" />
